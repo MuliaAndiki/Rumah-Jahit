@@ -17,6 +17,22 @@ const addImagesSchema = z.union([
   imageInputSchema, // support single image object directly
 ]);
 
+const createImageSchema = z.object({
+  catalogItemId: z.string().uuid("Invalid catalog item ID format"),
+  imageUrl: z.string().url("Invalid image URL format"),
+  cloudinaryPublicId: z.string().min(1, "Cloudinary public ID is required"),
+  isPrimary: z.boolean().optional(),
+  displayOrder: z.number().int().optional(),
+});
+
+const updateImageSchema = z.object({
+  catalogItemId: z.string().uuid("Invalid catalog item ID format").optional(),
+  imageUrl: z.string().url("Invalid image URL format").optional(),
+  cloudinaryPublicId: z.string().min(1, "Cloudinary public ID is required").optional(),
+  isPrimary: z.boolean().optional(),
+  displayOrder: z.number().int().optional(),
+});
+
 const reorderItemSchema = z.object({
   id: z.string().uuid("Invalid image ID format"),
   displayOrder: z.number().int("displayOrder must be an integer"),
@@ -28,6 +44,70 @@ const reorderSchema = z.union([
 ]);
 
 class ImageController {
+  /**
+   * POST /api/admin/images
+   * Create / save a single new image record directly after frontend uploaded file directly to Cloudinary.
+   * BE only saves the data metadata (imageUrl, cloudinaryPublicId, isPrimary, displayOrder).
+   */
+  public createImage = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const validation = createImageSchema.safeParse(req.body);
+      if (!validation.success) {
+        sendError(res, validation.error.issues[0]?.message || "Invalid image payload", 400);
+        return;
+      }
+
+      const { catalogItemId, imageUrl, cloudinaryPublicId, isPrimary, displayOrder } = validation.data;
+
+      // Verify catalog item exists
+      const item = await prisma.catalogItem.findUnique({
+        where: { id: catalogItemId },
+        include: {
+          images: {
+            orderBy: { displayOrder: "desc" },
+            take: 1,
+          },
+        },
+      });
+
+      if (!item) {
+        sendError(res, "Catalog item not found", 404);
+        return;
+      }
+
+      const currentMaxOrder = item.images.length > 0 ? item.images[0].displayOrder : -1;
+      const existingImagesCount = await prisma.catalogImage.count({
+        where: { catalogItemId },
+      });
+
+      const newImage = await prisma.$transaction(async (tx) => {
+        const shouldBePrimary = isPrimary ?? (existingImagesCount === 0);
+
+        if (shouldBePrimary) {
+          await tx.catalogImage.updateMany({
+            where: { catalogItemId },
+            data: { isPrimary: false },
+          });
+        }
+
+        return tx.catalogImage.create({
+          data: {
+            catalogItemId,
+            imageUrl,
+            cloudinaryPublicId,
+            isPrimary: shouldBePrimary,
+            displayOrder: displayOrder !== undefined ? displayOrder : currentMaxOrder + 1,
+          },
+        });
+      });
+
+      sendSuccess(res, newImage, "Image data saved successfully", 201);
+    } catch (error) {
+      console.error("Create Image Error:", error);
+      sendError(res, error, 500);
+    }
+  };
+
   /**
    * POST /api/admin/catalog/:itemId/images
    * Add one or more new images to an existing catalog item.
@@ -109,6 +189,79 @@ class ImageController {
       sendSuccess(res, updatedImages, "Images added successfully to catalog item", 201);
     } catch (error) {
       console.error("Add Images Error:", error);
+      sendError(res, error, 500);
+    }
+  };
+
+  /**
+   * PUT / PATCH /api/admin/images/:imageId
+   * Update an existing image record metadata (after FE uploaded updated image to Cloudinary).
+   * If cloudinaryPublicId changed, automatically delete old image from Cloudinary.
+   */
+  public updateImage = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const imageId = req.params.imageId;
+
+      const existingImage = await prisma.catalogImage.findUnique({
+        where: { id: imageId },
+      });
+
+      if (!existingImage) {
+        sendError(res, "Image not found", 404);
+        return;
+      }
+
+      const validation = updateImageSchema.safeParse(req.body);
+      if (!validation.success) {
+        sendError(res, validation.error.issues[0]?.message || "Invalid update image payload", 400);
+        return;
+      }
+
+      const { catalogItemId, imageUrl, cloudinaryPublicId, isPrimary, displayOrder } = validation.data;
+
+      const targetCatalogItemId = catalogItemId || existingImage.catalogItemId;
+
+      if (catalogItemId && catalogItemId !== existingImage.catalogItemId) {
+        const itemExists = await prisma.catalogItem.findUnique({
+          where: { id: catalogItemId },
+        });
+        if (!itemExists) {
+          sendError(res, "Target catalog item not found", 404);
+          return;
+        }
+      }
+
+      // If cloudinaryPublicId is being updated and differs from existing, delete old Cloudinary image
+      if (cloudinaryPublicId && cloudinaryPublicId !== existingImage.cloudinaryPublicId) {
+        if (existingImage.cloudinaryPublicId) {
+          await deleteFromCloudinary(existingImage.cloudinaryPublicId);
+        }
+      }
+
+      const updatedImage = await prisma.$transaction(async (tx) => {
+        if (isPrimary === true) {
+          await tx.catalogImage.updateMany({
+            where: { catalogItemId: targetCatalogItemId },
+            data: { isPrimary: false },
+          });
+        }
+
+        const updateData: any = {};
+        if (catalogItemId !== undefined) updateData.catalogItemId = catalogItemId;
+        if (imageUrl !== undefined) updateData.imageUrl = imageUrl;
+        if (cloudinaryPublicId !== undefined) updateData.cloudinaryPublicId = cloudinaryPublicId;
+        if (isPrimary !== undefined) updateData.isPrimary = isPrimary;
+        if (displayOrder !== undefined) updateData.displayOrder = displayOrder;
+
+        return tx.catalogImage.update({
+          where: { id: imageId },
+          data: updateData,
+        });
+      });
+
+      sendSuccess(res, updatedImage, "Image updated successfully");
+    } catch (error) {
+      console.error("Update Image Error:", error);
       sendError(res, error, 500);
     }
   };
@@ -248,6 +401,52 @@ class ImageController {
       sendSuccess(res, null, "Images reordered successfully");
     } catch (error) {
       console.error("Reorder Images Error:", error);
+      sendError(res, error, 500);
+    }
+  };
+
+  /**
+   * GET /api/admin/images/catalog/:itemId
+   * GET /api/admin/catalog/:itemId/images
+   * Fetch all images for a specific catalog item ordered by primary and display order.
+   */
+  public getImagesByCatalog = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const itemId = req.params.itemId;
+      const images = await prisma.catalogImage.findMany({
+        where: { catalogItemId: itemId },
+        orderBy: [
+          { isPrimary: "desc" },
+          { displayOrder: "asc" },
+        ],
+      });
+
+      sendSuccess(res, images, "Catalog images fetched successfully");
+    } catch (error) {
+      console.error("Get Images By Catalog Error:", error);
+      sendError(res, error, 500);
+    }
+  };
+
+  /**
+   * GET /api/admin/images/:imageId
+   * Fetch a single image by ID.
+   */
+  public getImageById = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const imageId = req.params.imageId;
+      const image = await prisma.catalogImage.findUnique({
+        where: { id: imageId },
+      });
+
+      if (!image) {
+        sendError(res, "Image not found", 404);
+        return;
+      }
+
+      sendSuccess(res, image, "Image fetched successfully");
+    } catch (error) {
+      console.error("Get Image By ID Error:", error);
       sendError(res, error, 500);
     }
   };

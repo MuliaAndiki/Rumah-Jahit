@@ -11,8 +11,8 @@ export interface UpdateProfilePayload {
 }
 
 class AuthService {
-  public async Login(payload: LoginPayload): Promise<StandardResponse<{ token: string; user: AdminUser }>> {
-    const res = await PublicPostResponse<{ token: string; user: AdminUser }>(
+  public async Login(payload: LoginPayload): Promise<StandardResponse<{ token: string; refreshToken?: string; user: AdminUser }>> {
+    const res = await PublicPostResponse<{ token: string; refreshToken?: string; user: AdminUser }>(
       AUTH_ENDPOINTS.LOGIN,
       payload
     );

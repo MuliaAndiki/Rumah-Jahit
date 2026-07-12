@@ -12,6 +12,7 @@ class AuthRouter {
   private routes(): void {
     this.router.post("/login", AuthController.login);
     this.router.post("/register", AuthController.register);
+    this.router.post("/refresh", AuthController.refresh);
     this.router.get("/me", verifyAdminToken, AuthController.me);
     this.router.put("/profile", verifyAdminToken, AuthController.updateProfile);
   }

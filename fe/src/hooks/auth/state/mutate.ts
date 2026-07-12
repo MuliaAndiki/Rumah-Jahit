@@ -3,17 +3,49 @@ import { Api, LoginPayload, RegisterPayload, StandardResponse, AdminUser } from 
 import type { UpdateProfilePayload } from "@/services/props.service";
 import { queryKey } from "@/configs/query-key";
 import { useAppNameSpace } from "@/hooks/useAppNameSpace";
+import { saveTokens } from "@/server/auth-cookies";
+import { savePwaAuthSession } from "@/utils/pwa-auth.storage";
 
 export function useLoginMutation() {
   const ns = useAppNameSpace();
 
   return useMutation<
-    StandardResponse<{ token: string; user: AdminUser }>,
+    StandardResponse<{ token: string; refreshToken?: string; user: AdminUser }>,
     Error,
     LoginPayload
   >({
     mutationFn: (payload) => Api.Auth.Login(payload),
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
+      if (res.data?.token) {
+        const accessToken = res.data.token;
+        const refreshToken = res.data.refreshToken || res.data.token;
+        const role = res.data.user?.role || "ADMIN";
+
+        try {
+          await saveTokens({
+            accessToken,
+            refreshToken,
+            role,
+          });
+        } catch (e) {
+          console.error("Gagal menyimpan cookies login:", e);
+        }
+
+        if (typeof window !== "undefined") {
+          localStorage.setItem("token", accessToken);
+          document.cookie = `rjahit_session=${accessToken}; path=/; max-age=604800; SameSite=Lax`;
+          document.cookie = `rjahit_refres=${refreshToken}; path=/; max-age=2592000; SameSite=Lax`;
+          if (role) document.cookie = `rjahit_role=${role}; path=/; max-age=2592000; SameSite=Lax`;
+        }
+
+        savePwaAuthSession({
+          accessToken,
+          refreshToken,
+          user: res.data.user,
+          role,
+        });
+      }
+
       ns.alert.toast({
         title: "Login Berhasil",
         message: res.message || "Selamat datang kembali",

@@ -66,15 +66,23 @@ class AuthController {
       };
 
       const token = jwt.sign(payload, secret, { expiresIn: "7d" });
+      const refreshToken = jwt.sign(payload, secret, { expiresIn: "30d" });
 
       sendSuccess(
         res,
         {
           token,
+          refreshToken,
+          tokens: {
+            accessToken: token,
+            refreshToken: refreshToken,
+            role: "ADMIN",
+          },
           user: {
             id: user.id,
             name: user.name,
             email: user.email,
+            role: "ADMIN",
             createdAt: user.createdAt,
           },
         },
@@ -233,6 +241,75 @@ class AuthController {
       sendSuccess(res, newUser, "Admin account registered successfully", 201);
     } catch (error) {
       console.error("Register Error:", error);
+      sendError(res, error, 500);
+    }
+  };
+
+  /**
+   * POST /api/auth/refresh
+   * Verify refresh token and return new token pair.
+   */
+  public refresh = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { refreshToken } = req.body;
+      if (!refreshToken) {
+        sendError(res, "Refresh token is required", 400);
+        return;
+      }
+
+      const secret = process.env.JWT_SECRET;
+      if (!secret) {
+        sendError(res, "Server configuration error: JWT_SECRET is missing", 500);
+        return;
+      }
+
+      let decoded: any;
+      try {
+        decoded = jwt.verify(refreshToken, secret);
+      } catch (err) {
+        sendError(res, "Invalid or expired refresh token", 401);
+        return;
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: decoded.id },
+      });
+
+      if (!user) {
+        sendError(res, "User not found", 404);
+        return;
+      }
+
+      const payload = {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+      };
+
+      const newAccessToken = jwt.sign(payload, secret, { expiresIn: "7d" });
+      const newRefreshToken = jwt.sign(payload, secret, { expiresIn: "30d" });
+
+      sendSuccess(
+        res,
+        {
+          token: newAccessToken,
+          refreshToken: newRefreshToken,
+          tokens: {
+            accessToken: newAccessToken,
+            refreshToken: newRefreshToken,
+            role: "ADMIN",
+          },
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            role: "ADMIN",
+          },
+        },
+        "Token refreshed successfully"
+      );
+    } catch (error) {
+      console.error("Refresh Token Error:", error);
       sendError(res, error, 500);
     }
   };

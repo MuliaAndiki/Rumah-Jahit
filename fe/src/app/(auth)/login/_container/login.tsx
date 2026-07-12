@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { saveTokens } from "@/server/auth-cookies";
+import { savePwaAuthSession } from "@/utils/pwa-auth.storage";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,9 +10,7 @@ import { useApi } from "@/hooks/useApi";
 import LoginSection from "../_section/LoginSection";
 import {
   loginSchema,
-  registerSchema,
   type LoginFormValues,
-  type RegisterFormValues,
 } from "@/schemas/auth.schema";
 import type { AuthMode } from "@/types";
 import {
@@ -37,15 +37,7 @@ export default function LoginContainer() {
     },
   });
 
-  const registerForm = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      password: "",
-    },
-  });
-
+ 
   React.useEffect(() => {
     const accounts = getSavedAccounts();
     setSavedAccounts(accounts);
@@ -64,7 +56,29 @@ export default function LoginContainer() {
         password: values.password,
       },
       {
-        onSuccess: (res) => {
+        onSuccess: async (res) => {
+          if (res.data?.token) {
+            const accessToken = res.data.token;
+            const refreshToken = res.data.refreshToken || res.data.token;
+            const role = res.data.user?.role || "ADMIN";
+            try {
+              await saveTokens({ accessToken, refreshToken, role });
+            } catch (e) {
+              console.error("Gagal menyimpan cookies login di container:", e);
+            }
+            if (typeof window !== "undefined") {
+              localStorage.setItem("token", accessToken);
+              document.cookie = `rjahit_session=${accessToken}; path=/; max-age=604800; SameSite=Lax`;
+              document.cookie = `rjahit_refres=${refreshToken}; path=/; max-age=2592000; SameSite=Lax`;
+              if (role) document.cookie = `rjahit_role=${role}; path=/; max-age=2592000; SameSite=Lax`;
+            }
+            savePwaAuthSession({
+              accessToken,
+              refreshToken,
+              user: res.data.user,
+              role,
+            });
+          }
           saveAccountToStorage({
             username: values.username,
             name: res.data?.user?.name || values.username,
@@ -75,29 +89,65 @@ export default function LoginContainer() {
     );
   };
 
-  const handleRegister = (values: RegisterFormValues) => {
-    api.auth.register.mutate(
-      {
-        name: values.name,
-        email: values.email,
-        password: values.password,
-      },
-      {
-        onSuccess: () => {
-          setIsAuth("login");
-          loginForm.setValue("username", values.email);
-        },
-      }
-    );
-  };
+  
 
-  const handleGuestLogin = () => {
-    // Navigate straight to dashboard for preview/guest testing
+  const handleGuestLogin = async () => {
+    try {
+      await saveTokens({
+        accessToken: "guest_mock_token",
+        refreshToken: "guest_mock_token",
+        role: "ADMIN",
+      });
+    } catch (e) {
+      console.error(e);
+    }
+    if (typeof window !== "undefined") {
+      localStorage.setItem("token", "guest_mock_token");
+      document.cookie = `rjahit_session=guest_mock_token; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `rjahit_refres=guest_mock_token; path=/; max-age=2592000; SameSite=Lax`;
+      document.cookie = `rjahit_role=ADMIN; path=/; max-age=2592000; SameSite=Lax`;
+    }
+    savePwaAuthSession({
+      accessToken: "guest_mock_token",
+      refreshToken: "guest_mock_token",
+      user: {
+        id: "guest-id",
+        name: "Guest Atelier",
+        email: "guest@rumahjahit.id",
+        role: "ADMIN",
+      },
+      role: "ADMIN",
+    });
     router.push("/dashboard");
   };
 
   const handleGoogleLogin = async (credential: string) => {
-    // Fallback google mock action
+    try {
+      await saveTokens({
+        accessToken: "google_mock_token",
+        refreshToken: "google_mock_token",
+        role: "ADMIN",
+      });
+    } catch (e) {
+      console.error(e);
+    }
+    if (typeof window !== "undefined") {
+      localStorage.setItem("token", "google_mock_token");
+      document.cookie = `rjahit_session=google_mock_token; path=/; max-age=604800; SameSite=Lax`;
+      document.cookie = `rjahit_refres=google_mock_token; path=/; max-age=2592000; SameSite=Lax`;
+      document.cookie = `rjahit_role=ADMIN; path=/; max-age=2592000; SameSite=Lax`;
+    }
+    savePwaAuthSession({
+      accessToken: "google_mock_token",
+      refreshToken: "google_mock_token",
+      user: {
+        id: "google-id",
+        name: "Google Admin",
+        email: "admin@rumahjahit.id",
+        role: "ADMIN",
+      },
+      role: "ADMIN",
+    });
     router.push("/dashboard");
   };
 
@@ -126,7 +176,7 @@ export default function LoginContainer() {
         isAuth,
         setIsAuth,
         loginForm,
-        registerForm,
+      
         savedAccounts,
         selectedSavedUsername,
         loginEntryMode,
@@ -135,7 +185,6 @@ export default function LoginContainer() {
       service={{
         isPending,
         onLoginSubmit: loginForm.handleSubmit(handleLogin),
-        onRegisterSubmit: registerForm.handleSubmit(handleRegister),
         onGuestSubmit: handleGuestLogin,
         onGoogleLogin: handleGoogleLogin,
         onSelectSavedAccount: handleSelectSavedAccount,

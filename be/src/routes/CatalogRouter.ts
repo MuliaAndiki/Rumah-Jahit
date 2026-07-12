@@ -18,6 +18,8 @@ class CatalogRouter {
     this.router.put("/:id", verifyAdminToken, CatalogController.update);
     this.router.delete("/:id", verifyAdminToken, CatalogController.delete);
 
+    // GET /api/admin/catalog/:itemId/images -> Get all images for an existing catalog item
+    this.router.get("/:itemId/images", verifyAdminToken, ImageController.getImagesByCatalog);
     // POST /api/admin/catalog/:itemId/images -> Add one or more new images to an existing catalog item
     this.router.post("/:itemId/images", verifyAdminToken, ImageController.addImages);
   }

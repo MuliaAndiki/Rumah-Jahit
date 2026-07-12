@@ -2,6 +2,7 @@ import { APP_SESSION_COOKIE_KEY, APP_SESSION_COOKIE_REFRESH } from "../configs/c
 import { baseurl, api, joinUrl, version } from "../configs/repo.config";
 import { ApiError as ApiErrorClass, type ApiSuccessResponse } from "../types/api.types";
 import { Logger } from "../utils/log";
+import { loadPwaAuthSession } from "../utils/pwa-auth.storage";
 
 export interface ClientRequestConfig {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -71,7 +72,10 @@ async function getUniversalAccessToken(): Promise<string | undefined> {
     if (match) {
       return match.slice(APP_SESSION_COOKIE_KEY.length + 1) || undefined;
     }
-    return localStorage.getItem("token") || undefined;
+    const localToken = localStorage.getItem("token");
+    if (localToken) return localToken;
+    const pwaSession = loadPwaAuthSession();
+    return pwaSession?.accessToken || undefined;
   }
 
   try {

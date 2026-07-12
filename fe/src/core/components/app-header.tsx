@@ -2,7 +2,6 @@
 
 import { navigationMenuConfig } from '@/configs/app.config';
 import { cn } from '@/utils/classname';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';

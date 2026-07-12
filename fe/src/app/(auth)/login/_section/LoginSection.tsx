@@ -15,7 +15,6 @@ import GoogleSignInButton from "@/components/page/auth/shared/GoogleSignInButton
 import SavedLoginAccounts from "@/components/page/auth/shared/SavedLoginAccounts";
 import type {
   LoginFormValues,
-  RegisterFormValues,
 } from "@/schemas/auth.schema";
 import type { AuthMode } from "@/types";
 import type { SavedLoginAccount } from "@/utils/saved-login.storage";
@@ -42,7 +41,7 @@ interface LoginSectionProps {
     isAuth: AuthMode;
     setIsAuth: React.Dispatch<React.SetStateAction<AuthMode>>;
     loginForm: UseFormReturn<LoginFormValues>;
-    registerForm: UseFormReturn<RegisterFormValues>;
+
     savedAccounts: SavedLoginAccount[];
     selectedSavedUsername: string | null;
     loginEntryMode: "picker" | "selected" | "manual";
@@ -51,7 +50,6 @@ interface LoginSectionProps {
   service: {
     isPending: boolean;
     onLoginSubmit: () => void;
-    onRegisterSubmit: () => void;
     onGuestSubmit?: () => void | Promise<void>;
     onGoogleLogin: (credential: string) => void | Promise<void>;
     onSelectSavedAccount: (account: SavedLoginAccount) => void;
@@ -86,7 +84,6 @@ const LoginSection: React.FC<LoginSectionProps> = ({ state, service }) => {
   };
 
   const loginErrors = state.loginForm.formState.errors;
-  const registerErrors = state.registerForm.formState.errors;
 
   return (
     <section className="w-full relative min-h-screen bg-linear-to-b from-primary to-primary/10 flex justify-center items-center ">
@@ -150,16 +147,7 @@ const LoginSection: React.FC<LoginSectionProps> = ({ state, service }) => {
                     >
                       Masuk
                     </Button>
-                    <Button
-                      variant={
-                        state.isAuth === "register" ? "activate" : "noActivate"
-                      }
-                      onClick={() => state.setIsAuth("register")}
-                      className="flex-1 rounded-full"
-                      type="button"
-                    >
-                      Daftar
-                    </Button>
+                  
                   </div>
                   <div className="w-full md:hidden space-y-2 items-center">
                     <GoogleSignInButton
@@ -226,8 +214,6 @@ const LoginSection: React.FC<LoginSectionProps> = ({ state, service }) => {
                           service.onLoginSubmit();
                           return;
                         }
-
-                        service.onRegisterSubmit();
                       }}
                       noValidate
                     >
@@ -255,54 +241,8 @@ const LoginSection: React.FC<LoginSectionProps> = ({ state, service }) => {
                             />
                           </AuthField>
                         )
-                      ) : (
-                        <>
-                          <AuthField
-                            label="Nama"
-                            htmlFor="register-name"
-                            error={registerErrors.name?.message}
-                          >
-                            <DecoratedInput
-                              id="register-name"
-                              type="text"
-                              placeholder="Admin Rumah Jahit"
-                              className={inputClassName}
-                              autoComplete="name"
-                              error={registerErrors.name?.message}
-                              {...state.registerForm.register("name")}
-                              iconLeft={
-                                <PersonOutlineRoundedIcon
-                                  className="text-muted-foreground"
-                                  height="1.2em"
-                                />
-                              }
-                            />
-                          </AuthField>
-
-                          <AuthField
-                            label="Email"
-                            htmlFor="register-email"
-                            error={registerErrors.email?.message}
-                          >
-                            <DecoratedInput
-                              id="register-email"
-                              type="email"
-                              placeholder="admin@rumahjahit.com"
-                              className={inputClassName}
-                              autoComplete="email"
-                              error={registerErrors.email?.message}
-                              {...state.registerForm.register("email")}
-                              iconLeft={
-                                <Icon
-                                  icon="mdi:email-outline"
-                                  className="text-muted-foreground"
-                                  height="1.2em"
-                                />
-                              }
-                            />
-                          </AuthField>
-                        </>
-                      )}
+                      ) : 
+                       null}
 
                       <AuthField
                         label={
@@ -314,9 +254,7 @@ const LoginSection: React.FC<LoginSectionProps> = ({ state, service }) => {
                           isLogin ? "login-password" : "register-password"
                         }
                         error={
-                          isLogin
-                            ? loginErrors.password?.message
-                            : registerErrors.password?.message
+                          loginErrors.password?.message 
                         }
                       >
                         {isLogin ? (
@@ -337,25 +275,7 @@ const LoginSection: React.FC<LoginSectionProps> = ({ state, service }) => {
                               />
                             }
                           />
-                        ) : (
-                          <DecoratedInput
-                            id="register-password"
-                            type="password"
-                            placeholder="Minimal 6 karakter"
-                            className={inputClassName}
-                            autoComplete="new-password"
-                            showPasswordToggle
-                            error={registerErrors.password?.message}
-                            {...state.registerForm.register("password")}
-                            iconLeft={
-                              <Icon
-                                icon="mdi:lock-outline"
-                                className="text-muted-foreground"
-                                height="1.2em"
-                              />
-                            }
-                          />
-                        )}
+                        ) : null}
                       </AuthField>
 
                       <ActionButton
