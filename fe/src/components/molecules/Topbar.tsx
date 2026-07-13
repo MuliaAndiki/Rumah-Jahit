@@ -112,7 +112,7 @@ export function Topbar({
         >
           {getMe?.avaUrl ? (
             <Image
-              src={getMe.avaUrl}
+              src={getMe.avaUrl ? '/avatars/1.png': "/avatars/1.png"}
               alt="Avatar"
               width={40}
               height={40}

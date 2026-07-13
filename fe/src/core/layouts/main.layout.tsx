@@ -21,9 +21,9 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
 
   const getPageHeader = (path: string) => {
     if (path.includes('/dashboard')) return { title: 'Dashboard', subtitle: 'Panel Kendali Utama & Ikhtisar Rumah Jahit' };
-    if (path.includes('/catalog')) return { title: 'Katalog', subtitle: 'Manajemen Koleksi & Busana Bespoke' };
+    if (path.includes('/catalog')) return { title: 'Katalog', subtitle: 'Manajemen Koleksi & Busana Wanita Custom' };
     if (path.includes('/settings')) return { title: 'Pengaturan', subtitle: 'Konfigurasi Profil & Preferensi Sistem' };
-    return { title: 'Admin Panel', subtitle: 'Rumah Jahit Bespoke Atelier' };
+    return { title: 'Admin Panel', subtitle: 'Rumah Jahit Khusus Wanita' };
   };
   const pageHeader = getPageHeader(pathname);
 

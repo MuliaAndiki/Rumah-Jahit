@@ -17,7 +17,7 @@ export default function AppFooter() {
             </span>
           </div>
           <p className="font-serif text-sm text-muted-foreground leading-relaxed">
-            Rumah Jahit Bespoke Tailoring menghadirkan keindahan rancangan busana dengan standar ketepatan ukuran, kualitas bahan pilihan, dan sentuhan Quiet Luxury untuk setiap momen berharga Anda.
+            Rumah Jahit Khusus Wanita menghadirkan keindahan rancangan busana dengan standar ketepatan ukuran, kualitas bahan pilihan, dan sentuhan elegan untuk setiap momen berharga Anda.
           </p>
         </div>
 
@@ -27,13 +27,13 @@ export default function AppFooter() {
             Alamat Butik & Studio
           </h4>
           <p className="font-serif text-sm text-muted-foreground leading-relaxed">
-            Jl. Senopati Dalam No. 88, Kebayoran Baru<br />
-            Jakarta Selatan, 12190<br />
+            Takengon, Aceh Tengah<br />
+            Nanggroe Aceh Darussalam<br />
             Indonesia
           </p>
           <p className="font-serif text-xs text-muted-foreground pt-1">
             <strong>Jam Operasional:</strong><br />
-            Senin - Sabtu: 10.00 - 19.00 WIB<br />
+            Senin - Sabtu: 09.00 - 18.00 WIB<br />
             Minggu & Hari Libur: Dengan Perjanjian
           </p>
         </div>
@@ -74,11 +74,7 @@ export default function AppFooter() {
                 Pertanyaan Umum (FAQ)
               </Link>
             </li>
-            <li className="pt-2 border-t border-border/40">
-              <Link href="/login" className="text-xs uppercase tracking-wider text-muted-foreground/60 hover:text-foreground transition-colors">
-                &bull; Panel Admin Studio
-              </Link>
-            </li>
+            
           </ul>
         </div>
 
@@ -90,7 +86,7 @@ export default function AppFooter() {
           <div className="space-y-2 font-serif text-sm text-muted-foreground">
             <p className="flex items-center gap-2">
               <Icon icon="mdi:phone-outline" className="text-lg text-foreground" />
-              <span>+62 811-2233-4455</span>
+              <span>+62 852-9498-8446</span>
             </p>
             <p className="flex items-center gap-2">
               <Icon icon="mdi:email-outline" className="text-lg text-foreground" />
@@ -115,7 +111,7 @@ export default function AppFooter() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs font-serif text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} Rumah Jahit Bespoke Tailoring Studio. All Rights Reserved.</p>
+        <p>&copy; {new Date().getFullYear()} Rumah Jahit Khusus Wanita Studio. All Rights Reserved.</p>
         <p className="mt-2 sm:mt-0 uppercase tracking-widest font-sans text-[10px]">
           Crafted with Precision & Quiet Luxury
         </p>

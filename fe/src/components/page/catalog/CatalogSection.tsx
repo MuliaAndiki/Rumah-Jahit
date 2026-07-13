@@ -204,7 +204,7 @@ const CatalogSection: React.FC<CatalogSectionProps> = ({ state, service }) => {
                 <Input
                   type="text"
                   required
-                  placeholder="Contoh: Jas Formal Bespoke Super 150s"
+                  placeholder="Contoh: Kebaya Pengantin Modern Eksklusif"
                   value={state.formTitle}
                   onChange={(e) => state.setFormTitle(e.target.value)}
                   className="h-11 rounded-xl"

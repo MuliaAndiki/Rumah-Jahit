@@ -34,13 +34,13 @@ const TentangKamiSection: React.FC = () => {
             </h2>
             <div className="font-serif text-base sm:text-lg text-muted-foreground space-y-4 leading-relaxed">
               <p>
-                Didirikan lebih dari dua dekade lalu di kawasan Jakarta Selatan, Rumah Jahit bermula dari kecintaan mendalam pada seni rancang bangun busana klasik (traditional bespoke tailoring).
+                Didirikan di Takengon, Aceh Tengah, Rumah Jahit bermula dari kecintaan mendalam pada seni rancang bangun busana wanita eksklusif (kebaya, gaun pesta, dan dress custom).
               </p>
               <p>
-                Dalam dunia modern yang serba cepat dan didominasi oleh konveksi instan, kami memilih jalan yang membutuhkan ketekunan, waktu, dan ketelitian. Kami percaya bahwa setiap individu memiliki postur anatomis yang unik, yang tidak dapat dipaksakan ke dalam ukuran standar berlabel S, M, L, atau XL.
+                Dalam dunia modern yang serba cepat dan didominasi oleh konveksi instan, kami memilih jalan yang membutuhkan ketekunan, waktu, dan ketelitian. Kami percaya bahwa setiap wanita memiliki keindahan postur yang unik, yang tidak dapat dipaksakan ke dalam ukuran standar berlabel S, M, L, atau XL.
               </p>
               <p>
-                Dedikasi kami pada kualitas jahitan tangan dan pelayanan personal telah menjadikan Rumah Jahit sebagai kepercayaan para pejabat diplomatik, eksekutif bisnis, serta mempelai pria dan wanita di momen paling istimewa mereka.
+                Dedikasi kami pada kualitas jahitan tangan dan pelayanan personal telah menjadikan Rumah Jahit sebagai kepercayaan para wanita berkelas serta mempelai wanita di momen paling istimewa mereka.
               </p>
             </div>
           </div>
@@ -74,7 +74,7 @@ const TentangKamiSection: React.FC = () => {
               Standar Kualitas &amp; Teknik Rancang
             </h2>
             <p className="font-serif text-base text-muted-foreground leading-relaxed">
-              Tiga pilar pengerjaan yang membedakan busana bespoke Rumah Jahit dengan produksi lainnya.
+              Tiga pilar pengerjaan yang membedakan busana rancangan Rumah Jahit dengan produksi konveksi biasa.
             </p>
           </div>
 
@@ -84,10 +84,10 @@ const TentangKamiSection: React.FC = () => {
                 <Icon icon="mdi:needle" />
               </div>
               <h3 className="font-serif text-2xl font-normal text-foreground">
-                Traditional Hand-Canvassing
+                Traditional Corsetry &amp; Bustier Construction
               </h3>
               <p className="font-serif text-sm text-muted-foreground leading-relaxed">
-                Jas kami dibangun dengan lapisan kanvas bulu kuda (horsehair canvas) yang dijahit tangan lapis demi lapis, bukan dilem dengan bahan sintesis. Hasilnya, jas dapat bernapas, mengikuti kontur tubuh seiring waktu, dan tidak pernah melempem atau menggelembung setelah dicuci kering.
+                Busana dan kebaya kami dibangun dengan teknik konstruksi korset dan bustier yang dipasang secara presisi mengikuti kontur tubuh. Hasilnya siluet tubuh tampak lebih anggun, tegap, nyaman bernapas, dan tidak mudah bergeser saat dikenakan berjam-jam.
               </p>
             </div>
 
@@ -147,7 +147,7 @@ const TentangKamiSection: React.FC = () => {
                 Mengawali karir sejak tahun 1990-an di bawah didikan master tailor bergaya Inggris lama, Master Hendro Wibowo telah menghabiskan lebih dari 30 tahun mengasah sensitivitasnya terhadap struktur tekstil dan anatomi manusia.
               </p>
               <p className="italic text-foreground font-normal border-l-2 border-foreground pl-4 py-1 my-4">
-                &ldquo;Rahasia dari jas dan busana yang agung bukanlah pada ornamen yang mencolok, melainkan pada ketenangan siluet dan kenyamanan mutlak yang dirasakan pemakainya sejak detik pertama mengenakannya.&rdquo;
+                &ldquo;Rahasia dari kebaya dan gaun yang memukau bukanlah pada hiasan yang berlebihan, melainkan pada keanggunan siluet dan presisi potongan yang menonjolkan keindahan alami pemakainya.&rdquo;
               </p>
               <p>
                 Setiap klien yang melangkah masuk ke Rumah Jahit akan ditangani secara langsung oleh tim penjahit profesional di bawah supervisi ketat Master Hendro. Mulai dari pengambilan ukuran awal hingga torehan kapur baste fitting, setiap detail diawasi langsung di studio kami.
@@ -156,7 +156,7 @@ const TentangKamiSection: React.FC = () => {
             <div className="pt-4 flex items-center gap-6">
               <div className="text-center sm:text-left">
                 <p className="font-serif text-3xl font-bold text-foreground">30+ Tahun</p>
-                <p className="font-sans text-xs uppercase tracking-wider text-muted-foreground mt-1">Pengalaman Bespoke</p>
+                <p className="font-sans text-xs uppercase tracking-wider text-muted-foreground mt-1">Pengalaman Jahit Wanita</p>
               </div>
               <div className="h-10 w-px bg-border/80" />
               <div className="text-center sm:text-left">
@@ -175,20 +175,20 @@ const TentangKamiSection: React.FC = () => {
             Undangan Eksklusif
           </span>
           <h2 className="font-serif text-3xl sm:text-5xl font-normal leading-tight">
-            Rasakan Sendiri Keanggunan <br className="hidden sm:block" /> Potongan Bespoke
-          </h2>
-          <p className="font-serif text-base sm:text-lg opacity-90 max-w-xl mx-auto leading-relaxed">
-            Kami mengundang Anda untuk hadir ke studio kami, menyentuh koleksi kain impor langsung, dan mendiskusikan visi busana Anda bersama master penjahit kami.
-          </p>
-          <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
-            <Link
-              href="https://wa.me/6281122334455"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-8 py-4 bg-background text-foreground font-serif text-lg tracking-wide hover:bg-muted/90 transition-colors inline-flex items-center justify-center gap-2"
-            >
-              <Icon icon="mdi:whatsapp" className="text-xl text-emerald-600" />
-              <span>Reservasi Konsultasi Fitting</span>
+            Rasakan Sendiri Keanggunan <br className="hidden sm:block" /> Potongan Busana Eksklusif
+            </h2>
+            <p className="font-serif text-base sm:text-lg opacity-90 max-w-xl mx-auto leading-relaxed">
+              Kami mengundang Anda untuk berkonsultasi secara langsung, menyentuh koleksi kain pilihan, dan mendiskusikan impian busana Anda bersama penjahit berpengalaman kami.
+            </p>
+            <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
+              <Link
+                href="https://wa.me/6285294988446"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-8 py-4 bg-background text-foreground font-serif text-lg tracking-wide hover:bg-muted/90 transition-colors inline-flex items-center justify-center gap-2"
+              >
+                <Icon icon="mdi:whatsapp" className="text-xl text-emerald-600" />
+                <span>Reservasi Konsultasi Fitting</span>
             </Link>
             <Link
               href="/layanan-dan-proses"

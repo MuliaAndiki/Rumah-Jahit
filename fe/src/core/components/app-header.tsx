@@ -33,7 +33,7 @@ export default function AppHeader() {
     >
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <div className="flex items-center gap-8">
-          {/* Brand Logo & Name */}
+         
           <Link href="/" className="flex items-center gap-3 group">
             <div className="w-10 h-10 overflow-hidden flex items-center justify-center bg-primary text-primary-foreground font-black text-lg tracking-widest">
               RJ
@@ -42,9 +42,7 @@ export default function AppHeader() {
               <span className="font-serif text-xl font-normal tracking-wide text-foreground group-hover:opacity-80 transition-opacity">
                 RUMAH JAHIT
               </span>
-              <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground font-sans">
-                Bespoke Studio
-              </span>
+             
             </div>
           </Link>
 

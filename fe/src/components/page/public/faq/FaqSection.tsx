@@ -11,8 +11,8 @@ export interface FaqItem {
 export const FAQ_DATA: FaqItem[] = [
   {
     category: "Proses & Waktu",
-    question: "Berapa lama waktu pembuatan jas formal atau kebaya bespoke di Rumah Jahit?",
-    answer: "Untuk pembuatan jas formal single/double-breasted membutuhkan waktu estimasi 3 sampai 4 minggu, termasuk 2 kali sesi fitting (baste fitting & final fitting). Sementara untuk kebaya pengantin atau beskap ceremonial dengan aplikasi payet/brokat rumit membutuhkan waktu sekitar 4 sampai 6 minggu. Kami sangat menyarankan reservasi minimal 1.5 bulan sebelum hari acara Anda."
+    question: "Berapa lama waktu pembuatan kebaya atau gaun pesta di Rumah Jahit?",
+    answer: "Untuk pembuatan gaun pesta atau cocktail dress membutuhkan waktu estimasi 3 sampai 4 minggu, termasuk 2 kali sesi fitting (baste fitting & final fitting). Sementara untuk kebaya pengantin atau gaun resepsi dengan aplikasi payet/brokat rumit membutuhkan waktu sekitar 4 sampai 6 minggu. Kami sangat menyarankan reservasi minimal 1.5 bulan sebelum hari acara Anda."
   },
   {
     category: "Bahan & Tekstil",
@@ -26,8 +26,8 @@ export const FAQ_DATA: FaqItem[] = [
   },
   {
     category: "Konstruksi Tailoring",
-    question: "Apa perbedaan mendasar antara Bespoke Tailoring dengan Made-to-Measure (MTM)?",
-    answer: "Pada Made-to-Measure (MTM), penjahit menggunakan pola standar (S, M, L) yang sudah ada lalu sedikit membesarkan atau mengecilkan bagian tertentu sesuai tubuh Anda. Sementara pada Bespoke Tailoring asli seperti di Rumah Jahit, kami membuat pola kertas baru dari nol (scratch) khusus untuk proporsi anatomi Anda, menggunakan konstruksi lapisan kanvas bulu kuda jahit tangan (hand-canvassing), serta melakukan baste fitting saat busana baru setengah jadi untuk presisi tingkat tinggi."
+    question: "Apa perbedaan mendasar antara Busana Custom Eksklusif dengan Made-to-Measure (MTM)?",
+    answer: "Pada Made-to-Measure (MTM), penjahit menggunakan pola standar (S, M, L) yang sudah ada lalu sedikit membesarkan atau mengecilkan bagian tertentu sesuai tubuh Anda. Sementara pada jahit custom eksklusif di Rumah Jahit, kami membuat pola kertas baru dari nol (scratch) khusus untuk proporsi anatomi tubuh Anda, menggunakan konstruksi bustier/corsetry yang presisi, serta melakukan baste fitting saat busana baru setengah jadi untuk kenyamanan tingkat tinggi."
   },
   {
     category: "Garansi & Fitting",
@@ -36,8 +36,8 @@ export const FAQ_DATA: FaqItem[] = [
   },
   {
     category: "Layanan Khusus",
-    question: "Apakah Rumah Jahit menyediakan layanan pengukuran di rumah atau kantor (Home / Office Fitting)?",
-    answer: "Ya, kami menyediakan layanan Private Home/Office Fitting Service untuk eksekutif atau keluarga pengantin di wilayah DKI Jakarta dengan reservasi khusus minimal 3 hari sebelumnya. Tim Master Cutter beserta sampel katalog kain impor akan berkunjung langsung ke lokasi Anda."
+    question: "Apakah Rumah Jahit menyediakan layanan konsultasi & pengukuran privat (Private Fitting)?",
+    answer: "Ya, kami menyediakan layanan Private Fitting Service di studio kami di Takengon maupun kunjungan khusus dengan reservasi sebelumnya. Tim penjahit kami beserta sampel katalog kain impor akan mendampingi Anda."
   }
 ];
 
@@ -62,7 +62,7 @@ const FaqSection: React.FC<FaqSectionProps> = ({ state, service }) => {
           </span>
           <h1 className="font-serif text-4xl sm:text-6xl font-normal text-foreground leading-tight">
             Pertanyaan Umum &amp; <br />
-            <span className="italic text-muted-foreground">Informasi Bespoke</span>
+            <span className="italic text-muted-foreground">Informasi Layanan</span>
           </h1>
           <p className="font-serif text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
             Semua hal yang perlu Anda ketahui mengenai tahapan pembuatan busana, standar kualitas atelier, serta ketentuan layanan di Rumah Jahit.
@@ -120,11 +120,11 @@ const FaqSection: React.FC<FaqSectionProps> = ({ state, service }) => {
           Masih Memiliki Pertanyaan Khusus?
         </h2>
         <p className="font-serif text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
-          Konsultasikan langsung kebutuhan busana formal atau kebaya Anda bersama Master Cutter kami melalui obrolan WhatsApp atau telepon langsung.
+          Konsultasikan langsung kebutuhan busana formal atau kebaya Anda bersama tim penjahit kami melalui obrolan WhatsApp atau telepon langsung.
         </p>
         <div className="pt-4 flex flex-col sm:flex-row justify-center gap-4">
           <Link
-            href="https://wa.me/6281122334455"
+            href="https://wa.me/6285294988446"
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-4 bg-primary text-primary-foreground font-serif text-lg tracking-wide hover:bg-primary/90 transition-colors inline-flex items-center justify-center gap-2"

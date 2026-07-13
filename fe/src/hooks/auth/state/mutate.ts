@@ -9,9 +9,10 @@ import {
 import type { UpdateProfilePayload } from '@/services/props.service';
 import { queryKey } from '@/configs/query-key';
 import { useAppNameSpace } from '@/hooks/useAppNameSpace';
-import { saveTokens } from '@/server/auth-cookies';
-import { savePwaAuthSession } from '@/utils/pwa-auth.storage';
+import { saveTokens, clearTokens } from '@/server/auth-cookies';
+import { savePwaAuthSession, clearPwaAuthSession } from '@/utils/pwa-auth.storage';
 import { useRouter } from 'next/navigation';
+import { APP_SESSION_COOKIE_KEY, APP_SESSION_COOKIE_REFRESH, APP_SESSION_COOKIE_ROLE } from '@/configs/cookies.config';
 
 export function useLoginMutation() {
   const ns = useAppNameSpace();
@@ -128,32 +129,58 @@ export function useUpdateProfileMutation() {
   });
 }
 
+async function performClientCleanup(queryClient: any) {
+  try {
+    await clearTokens();
+  } catch (e) {
+    console.error('[Logout] Failed server clearTokens:', e);
+  }
+
+  clearPwaAuthSession();
+
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('token');
+    localStorage.removeItem('rjahit_pwa_auth_session');
+    sessionStorage.removeItem('token');
+
+    const cookieKeys = [APP_SESSION_COOKIE_KEY, APP_SESSION_COOKIE_REFRESH, APP_SESSION_COOKIE_ROLE];
+    for (const key of cookieKeys) {
+      document.cookie = `${key}=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=Lax`;
+      document.cookie = `${key}=; path=/; max-age=0; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+    }
+  }
+
+  if (queryClient) {
+    queryClient.removeQueries({ queryKey: queryKey.authRoot() });
+    queryClient.setQueryData(queryKey.auth.me(), null);
+    queryClient.clear();
+  }
+}
+
 //  logout
 export function useLogoutMutation() {
   const ns = useAppNameSpace();
-  const router = useRouter()
+  const router = useRouter();
 
   return useMutation<StandardResponse<null>, Error, void>({
     mutationFn: () => Api.Auth.Logout(),
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
+      await performClientCleanup(ns.queryClient);
       ns.alert.toast({
         title: 'Logout Berhasil',
         message: res.message || 'Selamat tinggal',
         icon: 'success',
       });
-      router.push('/home')
+      router.push('/login');
     },
-    onSettled: async () => {
-      await ns.queryClient.invalidateQueries({
-        queryKey: queryKey.authRoot(),
-      });
-    },
-    onError: (err) => {
+    onError: async () => {
+      await performClientCleanup(ns.queryClient);
       ns.alert.toast({
-        title: 'Logout Gagal',
-        message: err.message || 'Terjadi kesalahan saat logout',
-        icon: 'error',
+        title: 'Logout Selesai',
+        message: 'Sesi anda telah dibersihkan',
+        icon: 'info',
       });
+      router.push('/login');
     },
   });
 }
