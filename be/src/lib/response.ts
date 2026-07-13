@@ -42,18 +42,34 @@ export function sendSuccess<T>(
 export function sendError(
   res: Response,
   error: string | Error | any,
-  statusCode = 500
+  statusCode?: number
 ): void {
   let errorMessage = "An unexpected error occurred.";
+  let code = statusCode && statusCode !== 500 ? statusCode : 500;
+
   if (typeof error === "string") {
     errorMessage = error;
+  } else if (error && typeof error.statusCode === "number") {
+    errorMessage = error.message || "Error";
+    if (!statusCode || statusCode === 500) code = error.statusCode;
+  } else if (error && typeof error.status === "number") {
+    errorMessage = error.message || "Error";
+    if (!statusCode || statusCode === 500) code = error.status;
   } else if (error instanceof Error) {
     errorMessage = error.message;
+    if ("statusCode" in error && typeof (error as any).statusCode === "number") {
+      if (!statusCode || statusCode === 500) code = (error as any).statusCode;
+    } else if ("status" in error && typeof (error as any).status === "number") {
+      if (!statusCode || statusCode === 500) code = (error as any).status;
+    }
   } else if (error && typeof error.message === "string") {
     errorMessage = error.message;
+    if (typeof error.statusCode === "number") {
+      if (!statusCode || statusCode === 500) code = error.statusCode;
+    }
   }
 
-  res.status(statusCode).json({
+  res.status(code).json({
     success: false,
     error: errorMessage,
   });

@@ -11,13 +11,20 @@ class ImageRouter {
 
   private routes(): void {
     // All routes are protected by verifyAdminToken
-    // Put /reorder before /:imageId so Express routes it correctly
+    // Specific static & prefix paths first
     this.router.patch("/reorder", verifyAdminToken, ImageController.reorderImages);
+    this.router.get("/catalog/:itemId", verifyAdminToken, ImageController.getImagesByCatalog);
+    this.router.post("/catalog/:itemId", verifyAdminToken, ImageController.addImages);
+
+    // General collection creation
+    this.router.post("/", verifyAdminToken, ImageController.createImage);
+
+    // Parameterized paths /:imageId
+    this.router.get("/:imageId", verifyAdminToken, ImageController.getImageById);
+    this.router.put("/:imageId", verifyAdminToken, ImageController.updateImage);
+    this.router.patch("/:imageId", verifyAdminToken, ImageController.updateImage);
     this.router.patch("/:imageId/set-primary", verifyAdminToken, ImageController.setPrimaryImage);
     this.router.delete("/:imageId", verifyAdminToken, ImageController.deleteImage);
-
-    // Support POST /api/admin/images/catalog/:itemId in addition to /api/admin/catalog/:itemId/images
-    this.router.post("/catalog/:itemId", verifyAdminToken, ImageController.addImages);
   }
 }
 

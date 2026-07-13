@@ -1,4 +1,5 @@
 import * as React from "react";
+export * from "./AdminNavigationTabs";
 
 export function Brid({ className = "" }: { className?: string }) {
   return (

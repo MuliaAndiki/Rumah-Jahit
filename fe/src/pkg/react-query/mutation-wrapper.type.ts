@@ -17,6 +17,15 @@ export type TPagedList<T> = TResponse<T> & {
   totalPages: number;
 };
 
+export const unwrapResponse = <T>(
+  response?: {
+    data?: TResponse<T>;
+  },
+  fallback?: T
+): T | undefined => {
+  return response?.data?.data ?? fallback;
+};
+
 // TPagedListResponse represents a paginated response that contains:
 // - All fields from TResponse (data, message, errors)
 // - Where data is a TPagedList<T> containing:

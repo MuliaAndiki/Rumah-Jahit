@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
-
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -13,17 +12,17 @@ model User {
   name         String   @db.VarChar(100)
   email        String   @unique @db.VarChar(150)
   passwordHash String   @map("password_hash") @db.VarChar(255)
-  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz
+  createdAt    DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
 
-  @@map("users") 
+  @@map("users")
 }
 
 model Category {
   id           Int           @id @default(autoincrement())
   name         String        @db.VarChar(100)
   slug         String        @unique @db.VarChar(120)
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
   catalogItems CatalogItem[]
-  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz
 
   @@map("categories")
 }
@@ -31,17 +30,17 @@ model Category {
 model CatalogItem {
   id            String         @id @default(uuid()) @db.Uuid
   categoryId    Int?           @map("category_id")
-  category      Category?      @relation(fields: [categoryId], references: [id], onDelete: SetNull)
   title         String         @db.VarChar(200)
   slug          String         @unique @db.VarChar(220)
-  description   String?        @db.Text
-  priceStart    Decimal?       @map("price_start") @db.Decimal(12, 0) 
-  estimatedTime String?        @map("estimated_time") @db.VarChar(50) 
-  isFeatured    Boolean        @default(false) @map("is_featured") 
-  isPublished   Boolean        @default(true) @map("is_published") 
-  images        CatalogImage[] 
-  createdAt     DateTime       @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt     DateTime       @updatedAt @map("updated_at") @db.Timestamptz
+  description   String?
+  priceStart    Decimal?       @map("price_start") @db.Decimal(12, 0)
+  estimatedTime String?        @map("estimated_time") @db.VarChar(50)
+  isFeatured    Boolean        @default(false) @map("is_featured")
+  isPublished   Boolean        @default(true) @map("is_published")
+  createdAt     DateTime       @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt     DateTime       @updatedAt @map("updated_at") @db.Timestamptz(6)
+  images        CatalogImage[]
+  category      Category?      @relation(fields: [categoryId], references: [id])
 
   @@index([categoryId])
   @@index([isPublished, isFeatured])
@@ -51,12 +50,12 @@ model CatalogItem {
 model CatalogImage {
   id                 String      @id @default(uuid()) @db.Uuid
   catalogItemId      String      @map("catalog_item_id") @db.Uuid
-  catalogItem        CatalogItem @relation(fields: [catalogItemId], references: [id], onDelete: Cascade)
-  imageUrl           String      @map("image_url") @db.VarChar(500) 
+  imageUrl           String      @map("image_url") @db.VarChar(500)
   cloudinaryPublicId String      @map("cloudinary_public_id") @db.VarChar(255)
-  isPrimary          Boolean     @default(false) @map("is_primary") 
-  displayOrder       Int         @default(0) @map("display_order") 
-  createdAt          DateTime    @default(now()) @map("created_at") @db.Timestamptz
+  isPrimary          Boolean     @default(false) @map("is_primary")
+  displayOrder       Int         @default(0) @map("display_order")
+  createdAt          DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  catalogItem        CatalogItem @relation(fields: [catalogItemId], references: [id], onDelete: Cascade)
 
   @@index([catalogItemId])
   @@map("catalog_images")

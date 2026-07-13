@@ -3,7 +3,11 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
-import SettingsSection from "../_section/SettingsSection";
+import SettingsSection from "@/components/page/settings/SettingsSection";
+
+import { clearTokens } from "@/server/auth-cookies";
+import { clearPwaAuthSession } from "@/utils/pwa-auth.storage";
+import { APP_SESSION_COOKIE_KEY, APP_SESSION_COOKIE_REFRESH, APP_SESSION_COOKIE_ROLE } from "@/configs/cookies.config";
 
 export default function SettingsContainer() {
   const router = useRouter();
@@ -65,10 +69,19 @@ export default function SettingsContainer() {
     );
   };
 
-  const handleLogout = () => {
-    // Clear token from cookie & localStorage
-    document.cookie = "etno_session=; path=/; max-age=0";
+  const handleLogout = async () => {
+    try {
+      await clearTokens();
+    } catch (e) {
+      console.error(e);
+    }
+    clearPwaAuthSession();
     localStorage.removeItem("token");
+    if (typeof document !== "undefined") {
+      document.cookie = `${APP_SESSION_COOKIE_KEY}=; path=/; max-age=0`;
+      document.cookie = `${APP_SESSION_COOKIE_REFRESH}=; path=/; max-age=0`;
+      document.cookie = `${APP_SESSION_COOKIE_ROLE}=; path=/; max-age=0`;
+    }
     router.push("/login");
   };
 

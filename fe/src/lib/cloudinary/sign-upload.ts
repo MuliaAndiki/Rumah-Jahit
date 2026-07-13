@@ -1,4 +1,5 @@
 import crypto from "crypto";
+import { env } from "@/config/config.config";
 
 export type CloudinaryUploadType = "image" | "audio" | "video" | "raw" | "auto";
 
@@ -16,15 +17,25 @@ export function getCloudinarySignedUploadConfig(
   customFolder = "rumah_jahit/catalog"
 ): CloudinarySignedUploadConfig {
   const cloudName =
+    env.NEXT_CLOUDINARY_CLOUD_NAME ||
+    process.env.NEXT_CLOUDINARY_CLOUD_NAME ||
     process.env.CLOUDINARY_CLOUD_NAME ||
     process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
     "";
-  const apiKey = process.env.CLOUDINARY_API_KEY || "";
-  const apiSecret = process.env.CLOUDINARY_API_SECRET || "";
+  const apiKey =
+    env.NEXT_CLOUDINARY_API_KEY ||
+    process.env.NEXT_CLOUDINARY_API_KEY ||
+    process.env.CLOUDINARY_API_KEY ||
+    "";
+  const apiSecret =
+    env.NEXT_CLOUDINARY_API_SECRET ||
+    process.env.NEXT_CLOUDINARY_API_SECRET ||
+    process.env.CLOUDINARY_API_SECRET ||
+    "";
 
   if (!cloudName || !apiKey || !apiSecret) {
     throw new Error(
-      "Kredensial Cloudinary (CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET) belum dikonfigurasi di server environment."
+      "Kredensial Cloudinary (NEXT_CLOUDINARY_CLOUD_NAME, NEXT_CLOUDINARY_API_KEY, NEXT_CLOUDINARY_API_SECRET) belum dikonfigurasi di server environment."
     );
   }
 

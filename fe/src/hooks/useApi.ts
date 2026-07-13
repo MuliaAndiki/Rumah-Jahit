@@ -1,9 +1,9 @@
-import { useAuth } from "./auth/useAuth";
-import { useCategories } from "./categories/useCategories";
-import { useCatalog } from "./catalog/useCatalog";
-import { useImages } from "./images/useImages";
+import { useAuth } from './auth/useAuth';
+import { useCatalog } from './catalog/useCatalog';
+import { useCategories } from './categories/useCategories';
+import { useImages } from './images/useImages';
 
-export function useApi(options?: {
+export interface UseApiOptions {
   catalogParams?: {
     page?: number;
     limit?: number;
@@ -14,16 +14,22 @@ export function useApi(options?: {
   };
   catalogItemId?: string;
   enabledGetMe?: boolean;
-  enabledCategories?: boolean;
   enabledCatalogList?: boolean;
   enabledCatalogDetail?: boolean;
-}) {
+  enabledCategories?: boolean;
+}
+
+export function useApi(options?: UseApiOptions) {
   return {
-    auth: useAuth({ enabledGetMe: options?.enabledGetMe }),
-    categories: useCategories({ enabled: options?.enabledCategories }),
+    auth: useAuth({
+      enabledGetMe: options?.enabledGetMe,
+    }),
     catalog: useCatalog(options?.catalogParams, options?.catalogItemId, {
       enabledList: options?.enabledCatalogList,
       enabledDetail: options?.enabledCatalogDetail,
+    }),
+    categories: useCategories({
+      enabled: options?.enabledCategories,
     }),
     images: useImages(),
   };

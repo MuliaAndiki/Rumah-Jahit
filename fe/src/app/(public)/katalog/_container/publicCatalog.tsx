@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useApi } from "@/hooks/useApi";
-import PublicCatalogSection from "../_section/PublicCatalogSection";
+import PublicCatalogSection from "@/components/page/public/katalog/PublicCatalogSection";
 
 export default function PublicCatalogContainer() {
   const [selectedCategory, setSelectedCategory] = React.useState<string>("");

@@ -1,9 +1,19 @@
 import { IMAGE_ENDPOINTS } from "../endpoints/image.endpoints";
-import { ClientPostResponse, ClientDelResponse, ClientPatchResponse } from "./http";
+import { ClientGetResponse, ClientPostResponse, ClientDelResponse, ClientPatchResponse, ClientPutResponse } from "./http";
 import { toServiceResponse, StandardResponse } from "./service-response";
 import type { CatalogImageItem, CatalogImagePayload, ReorderImagePayload } from "./props.service";
 
 class ImageService {
+  public async CreateImage(
+    payload: CatalogImagePayload & { catalogItemId: string }
+  ): Promise<StandardResponse<CatalogImageItem>> {
+    const res = await ClientPostResponse<CatalogImageItem>(IMAGE_ENDPOINTS.CREATE, payload);
+    return toServiceResponse(res, {
+      message: "Data gambar berhasil disimpan",
+      statusCode: 201,
+    });
+  }
+
   public async AddCatalogImages(
     itemId: string,
     payload: CatalogImagePayload[] | { images: CatalogImagePayload[] }
@@ -12,6 +22,33 @@ class ImageService {
     return toServiceResponse(res, {
       message: "Gambar berhasil ditambahkan",
       statusCode: 201,
+    });
+  }
+
+  public async GetImageById(imageId: string): Promise<StandardResponse<CatalogImageItem>> {
+    const res = await ClientGetResponse<CatalogImageItem>(IMAGE_ENDPOINTS.GET_BY_ID(imageId));
+    return toServiceResponse(res, {
+      message: "Detail gambar berhasil diambil",
+      statusCode: 200,
+    });
+  }
+
+  public async GetImagesByCatalog(itemId: string): Promise<StandardResponse<CatalogImageItem[]>> {
+    const res = await ClientGetResponse<CatalogImageItem[]>(IMAGE_ENDPOINTS.GET_BY_CATALOG(itemId));
+    return toServiceResponse(res, {
+      message: "Daftar gambar berhasil diambil",
+      statusCode: 200,
+    });
+  }
+
+  public async UpdateImage(
+    imageId: string,
+    payload: Partial<CatalogImagePayload & { catalogItemId: string }>
+  ): Promise<StandardResponse<CatalogImageItem>> {
+    const res = await ClientPutResponse<CatalogImageItem>(IMAGE_ENDPOINTS.UPDATE(imageId), payload);
+    return toServiceResponse(res, {
+      message: "Data gambar berhasil diperbarui",
+      statusCode: 200,
     });
   }
 

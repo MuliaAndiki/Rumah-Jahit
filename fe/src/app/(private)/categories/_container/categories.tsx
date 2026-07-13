@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { useApi } from "@/hooks/useApi";
-import CategoriesSection from "../_section/CategoriesSection";
+import CategoriesSection from "@/components/page/categories/CategoriesSection";
 import type { CategoryItem } from "@/services/props.service";
 
 export default function CategoriesContainer() {

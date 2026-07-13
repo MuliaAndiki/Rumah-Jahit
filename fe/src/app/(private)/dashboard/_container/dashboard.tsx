@@ -3,7 +3,11 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
-import DashboardSection from "../_section/DashboardSection";
+import DashboardSection from "@/components/page/dashboard/DashboardSection";
+import { clearTokens } from "@/server/auth-cookies";
+import { clearPwaAuthSession } from "@/utils/pwa-auth.storage";
+import { APP_SESSION_COOKIE_KEY, APP_SESSION_COOKIE_REFRESH, APP_SESSION_COOKIE_ROLE } from "@/configs/cookies.config";
+import MainLayout from "@/core/layouts/main.layout";
 
 export default function DashboardContainer() {
   const router = useRouter();
@@ -17,25 +21,32 @@ export default function DashboardContainer() {
   const catalogItems = catalogData?.data || [];
   const isLoading = isCategoriesLoading || isCatalogLoading;
 
-  const handleLogout = () => {
-    // Clear session cookies or local storage and redirect to login
+  const handleLogout = async () => {
+    try {
+      await clearTokens();
+    } catch (e) {
+      console.error(e);
+    }
+    clearPwaAuthSession();
     if (typeof document !== "undefined") {
-      document.cookie = "etno_session=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      document.cookie = `${APP_SESSION_COOKIE_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      document.cookie = `${APP_SESSION_COOKIE_REFRESH}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      document.cookie = `${APP_SESSION_COOKIE_ROLE}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
     }
     router.push("/login");
   };
 
   return (
-    <DashboardSection
-      state={{
-        user: user?.data,
-        categories,
-        catalogItems,
-        isLoading,
-      }}
-      service={{
-        onLogout: handleLogout,
-      }}
-    />
+      <DashboardSection
+        state={{
+          user: user?.data,
+          categories,
+          catalogItems,
+          isLoading,
+        }}
+        service={{
+          onLogout: handleLogout,
+        }}
+      />
   );
 }

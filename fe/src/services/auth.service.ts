@@ -1,5 +1,5 @@
 import { AUTH_ENDPOINTS } from "../endpoints/auth.endpoints";
-import { PublicPostResponse, GetResponse, PutResponse } from "./http";
+import { PublicPostResponse, GetResponse, PutResponse, PostResponse } from "./http";
 import { toServiceResponse, StandardResponse } from "./service-response";
 import type { LoginPayload, RegisterPayload, AdminUser } from "./props.service";
 
@@ -11,8 +11,8 @@ export interface UpdateProfilePayload {
 }
 
 class AuthService {
-  public async Login(payload: LoginPayload): Promise<StandardResponse<{ token: string; user: AdminUser }>> {
-    const res = await PublicPostResponse<{ token: string; user: AdminUser }>(
+  public async Login(payload: LoginPayload): Promise<StandardResponse<{ token: string; refreshToken?: string; user: AdminUser }>> {
+    const res = await PublicPostResponse<{ token: string; refreshToken?: string; user: AdminUser }>(
       AUTH_ENDPOINTS.LOGIN,
       payload
     );
@@ -45,6 +45,13 @@ class AuthService {
     const res = await PutResponse<AdminUser>(AUTH_ENDPOINTS.PROFILE, payload);
     return toServiceResponse(res, {
       message: "Profil berhasil diperbarui",
+      statusCode: 200,
+    });
+  }
+  public async Logout(): Promise<StandardResponse<null>> {
+    const res = await PostResponse<null>(AUTH_ENDPOINTS.LOGOUT);
+    return toServiceResponse(res, {
+      message: "Logout berhasil",
       statusCode: 200,
     });
   }

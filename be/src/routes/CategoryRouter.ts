@@ -10,8 +10,10 @@ class CategoryRouter {
   }
 
   private routes(): void {
-    // All routes are protected by verifyAdminToken
-    this.router.get("/", verifyAdminToken, CategoryController.getAll);
+    // Public GET endpoint for category listing
+    this.router.get("/", CategoryController.getAll);
+
+    // Protected endpoints requiring verifyAdminToken
     this.router.post("/", verifyAdminToken, CategoryController.create);
     this.router.put("/:id", verifyAdminToken, CategoryController.update);
     this.router.delete("/:id", verifyAdminToken, CategoryController.delete);
