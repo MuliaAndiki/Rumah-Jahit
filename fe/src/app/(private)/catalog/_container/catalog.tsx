@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
-import CatalogSection from "../_section/CatalogSection";
+import CatalogSection from "@/components/page/catalog/CatalogSection";
 
 export default function CatalogContainer() {
   const router = useRouter();

@@ -119,4 +119,3 @@ export async function ensureAuthenticatedSession(
   return result.ok;
 }
 
-export { AUTH_COOKIE_MAX_AGE };

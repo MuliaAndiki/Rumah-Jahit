@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useApi } from "@/hooks/useApi";
-import LoginSection from "../_section/LoginSection";
+import LoginSection from "@/components/page/auth/LoginSection";
 import {
   loginSchema,
   type LoginFormValues,

@@ -4,7 +4,7 @@ import * as React from "react";
 import { useParams } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
 import { Api } from "@/services/props.service";
-import CatalogDetailSection from "../_section/CatalogDetailSection";
+import CatalogDetailSection from "@/components/page/catalog/CatalogDetailSection";
 
 export default function CatalogDetailContainer() {
   const params = useParams();
@@ -69,7 +69,38 @@ export default function CatalogDetailContainer() {
     });
   };
 
-  const handleFileSelected = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUploadPanelImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setIsUploading(true);
+    try {
+      const file = files[0];
+      setUploadProgressText("Mengunggah Foto Panel Utama ke Cloudinary...");
+      const uploaded = await Api.Upload.uploadDirectToCloudinary(file);
+
+      setUploadProgressText("Menyimpan Foto Panel Utama ke database...");
+      await addImagesMutation.mutateAsync({
+        itemId: id,
+        payload: [
+          {
+            imageUrl: uploaded.imageUrl,
+            cloudinaryPublicId: uploaded.cloudinaryPublicId,
+            isPrimary: true,
+            displayOrder: 1,
+          },
+        ],
+      });
+    } catch (error) {
+      alert(error instanceof Error ? error.message : "Terjadi kesalahan saat mengunggah foto panel");
+    } finally {
+      setIsUploading(false);
+      setUploadProgressText("");
+      if (e.target) e.target.value = "";
+    }
+  };
+
+  const handleUploadOtherImages = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
@@ -80,23 +111,23 @@ export default function CatalogDetailContainer() {
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        setUploadProgressText(`Mengunggah foto ${i + 1} dari ${files.length} ke Cloudinary...`);
+        setUploadProgressText(`Mengunggah foto detail (${i + 1}/${files.length}) ke Cloudinary...`);
         const uploaded = await Api.Upload.uploadDirectToCloudinary(file);
         payloads.push({
           imageUrl: uploaded.imageUrl,
           cloudinaryPublicId: uploaded.cloudinaryPublicId,
-          isPrimary: currentCount === 0 && i === 0,
+          isPrimary: false,
           displayOrder: currentCount + i + 1,
         });
       }
 
-      setUploadProgressText("Menyimpan ke database galeri produk...");
+      setUploadProgressText("Menyimpan galeri foto ke database...");
       await addImagesMutation.mutateAsync({
         itemId: id,
         payload: payloads,
       });
     } catch (error) {
-      alert(error instanceof Error ? error.message : "Terjadi kesalahan saat mengunggah foto");
+      alert(error instanceof Error ? error.message : "Terjadi kesalahan saat mengunggah foto detail");
     } finally {
       setIsUploading(false);
       setUploadProgressText("");
@@ -145,7 +176,8 @@ export default function CatalogDetailContainer() {
       }}
       service={{
         onUpdateMetadata: handleUpdateMetadata,
-        onFileSelected: handleFileSelected,
+        onUploadPanelImage: handleUploadPanelImage,
+        onUploadOtherImages: handleUploadOtherImages,
         onSetPrimary: handleSetPrimary,
         onConfirmDeleteImage: handleConfirmDeleteImage,
       }}

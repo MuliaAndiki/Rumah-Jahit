@@ -11,16 +11,15 @@ class CatalogRouter {
   }
 
   private routes(): void {
-    // All routes are protected by verifyAdminToken
-    this.router.get("/", verifyAdminToken, CatalogController.getAll);
-    this.router.get("/:id", verifyAdminToken, CatalogController.getById);
+    // Public GET routes for catalog items and details (accessible by public slug or ID)
+    this.router.get("/", CatalogController.getAll);
+    this.router.get("/:id", CatalogController.getById);
+    this.router.get("/:itemId/images", ImageController.getImagesByCatalog);
+
+    // Protected routes requiring verifyAdminToken
     this.router.post("/", verifyAdminToken, CatalogController.create);
     this.router.put("/:id", verifyAdminToken, CatalogController.update);
     this.router.delete("/:id", verifyAdminToken, CatalogController.delete);
-
-    // GET /api/admin/catalog/:itemId/images -> Get all images for an existing catalog item
-    this.router.get("/:itemId/images", verifyAdminToken, ImageController.getImagesByCatalog);
-    // POST /api/admin/catalog/:itemId/images -> Add one or more new images to an existing catalog item
     this.router.post("/:itemId/images", verifyAdminToken, ImageController.addImages);
   }
 }

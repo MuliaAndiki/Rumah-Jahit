@@ -3,10 +3,11 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
-import DashboardSection from "../_section/DashboardSection";
+import DashboardSection from "@/components/page/dashboard/DashboardSection";
 import { clearTokens } from "@/server/auth-cookies";
 import { clearPwaAuthSession } from "@/utils/pwa-auth.storage";
 import { APP_SESSION_COOKIE_KEY, APP_SESSION_COOKIE_REFRESH, APP_SESSION_COOKIE_ROLE } from "@/configs/cookies.config";
+import MainLayout from "@/core/layouts/main.layout";
 
 export default function DashboardContainer() {
   const router = useRouter();
@@ -36,16 +37,16 @@ export default function DashboardContainer() {
   };
 
   return (
-    <DashboardSection
-      state={{
-        user: user?.data,
-        categories,
-        catalogItems,
-        isLoading,
-      }}
-      service={{
-        onLogout: handleLogout,
-      }}
-    />
+      <DashboardSection
+        state={{
+          user: user?.data,
+          categories,
+          catalogItems,
+          isLoading,
+        }}
+        service={{
+          onLogout: handleLogout,
+        }}
+      />
   );
 }

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
-import SettingsSection from "../_section/SettingsSection";
+import SettingsSection from "@/components/page/settings/SettingsSection";
 
 import { clearTokens } from "@/server/auth-cookies";
 import { clearPwaAuthSession } from "@/utils/pwa-auth.storage";

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { refreshAuthSession, getStoredRefreshToken } from "@/server/refresh";
 
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 export async function POST(request: Request) {
   try {

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useParams } from "next/navigation";
 import { useApi } from "@/hooks/useApi";
-import PublicCatalogDetailSection from "../_section/PublicCatalogDetailSection";
+import PublicCatalogDetailSection from "@/components/page/public/katalog/PublicCatalogDetailSection";
 
 export default function PublicCatalogDetailContainer() {
   const params = useParams();

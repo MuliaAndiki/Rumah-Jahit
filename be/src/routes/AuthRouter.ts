@@ -15,6 +15,7 @@ class AuthRouter {
     this.router.post("/refresh", AuthController.refresh);
     this.router.get("/me", verifyAdminToken, AuthController.me);
     this.router.put("/profile", verifyAdminToken, AuthController.updateProfile);
+    this.router.post("/logout", verifyAdminToken, AuthController.logout);
   }
 }
 
