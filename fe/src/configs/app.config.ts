@@ -1,5 +1,5 @@
+import { BookOpen, History, Home, User } from 'lucide-react';
 import React from 'react';
-import { Home, BookOpen, History, User } from 'lucide-react';
 
 interface AppConfig {
   name: string;

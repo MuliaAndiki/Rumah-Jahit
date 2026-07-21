@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+
 import LokasiKontakContainer from "./_container/lokasiKontak";
 
 export const metadata: Metadata = {

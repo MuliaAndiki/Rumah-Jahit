@@ -1,5 +1,5 @@
+import { useCreateCategoryMutation, useDeleteCategoryMutation,useUpdateCategoryMutation } from "./state/mutate";
 import { useGetCategoriesQuery } from "./state/query";
-import { useCreateCategoryMutation, useUpdateCategoryMutation, useDeleteCategoryMutation } from "./state/mutate";
 
 export function useCategories(options?: { enabled?: boolean }) {
   const getCategories = useGetCategoriesQuery(options?.enabled ?? true);

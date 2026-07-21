@@ -1,13 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import React, { useState } from 'react';
+
 import { Topbar } from '@/components/molecules/Topbar';
-import { Sidebar } from './sidebar.component/Sidebar';
-import { unwrapResponse } from '@/pkg/react-query/mutation-wrapper.type';
-import { useAppNameSpace } from '@/hooks/useAppNameSpace';
 import { useApi } from '@/hooks/useApi';
+import { useAppNameSpace } from '@/hooks/useAppNameSpace';
+import { unwrapResponse } from '@/pkg/react-query/mutation-wrapper.type';
 import { PickResponeGetMe } from '@/types/res/auth.respone';
+
+import { Sidebar } from './sidebar.component/Sidebar';
 
 export default function MainLayout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(true);
@@ -44,9 +46,10 @@ export default function MainLayout({ children }: { children: React.ReactNode }) 
         subtitle={pageHeader.subtitle}
         // setting disini
         notificationHref={'/'}
-        profileHref={'/'}
+        profileHref={'/profile'}
         sidebarOpenWidth={'w-64'}
         sidebarClosedWidth={'w-14 lg:w-24'}
+        onLogout={handleLogout}
       />
 
       <div className="flex flex-1 pt-16 lg:pt-20">

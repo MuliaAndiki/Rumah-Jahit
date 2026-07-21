@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import FaqSection from "@/components/page/public/faq/FaqSection";
 
 const FaqContainer: React.FC = () => {

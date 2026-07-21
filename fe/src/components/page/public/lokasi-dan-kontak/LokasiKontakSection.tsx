@@ -1,6 +1,6 @@
-import * as React from "react";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import * as React from "react";
 
 const LokasiKontakSection: React.FC = () => {
   const mapUrl = "https://www.google.com/maps/@4.6384208,96.8452741,144m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI2MDcwOC4wIKXMDSoASAFQAw%3D%3D";

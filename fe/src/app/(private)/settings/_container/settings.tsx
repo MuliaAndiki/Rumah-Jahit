@@ -1,12 +1,10 @@
 "use client";
-
 import * as React from "react";
-import { useRouter } from "next/navigation";
-import { useApi } from "@/hooks/useApi";
+
 import SettingsSection from "@/components/page/settings/SettingsSection";
+import { useApi } from "@/hooks/useApi";
 
 export default function SettingsContainer() {
-  const router = useRouter();
   const api = useApi({ enabledGetMe: true });
 
   const { data: meRes, isLoading } = api.auth.getMe;
@@ -65,9 +63,7 @@ export default function SettingsContainer() {
     );
   };
 
-  const handleLogout = () => {
-    api.auth.mutate.logout.mutate();
-  };
+
 
   return (
     <SettingsSection
@@ -90,7 +86,7 @@ export default function SettingsContainer() {
       service={{
         onUpdateProfile: handleUpdateProfile,
         onUpdatePassword: handleUpdatePassword,
-        onLogout: handleLogout,
+    
       }}
     />
   );

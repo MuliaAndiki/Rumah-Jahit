@@ -1,5 +1,6 @@
-import * as React from 'react';
 import { Loader2 } from 'lucide-react';
+import * as React from 'react';
+
 import { Button, ButtonProps } from '../atoms';
 
 export interface ActionButtonProps extends ButtonProps {

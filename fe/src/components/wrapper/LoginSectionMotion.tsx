@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+
 import type { AuthMode } from "@/types";
 
 interface LoginSectionMotionProps {

@@ -1,13 +1,14 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { Logger } from "@/utils/log";
+
 import {
   APP_SESSION_COOKIE_KEY,
   APP_SESSION_COOKIE_REFRESH,
   APP_SESSION_COOKIE_ROLE,
   AUTH_COOKIE_MAX_AGE,
 } from "@/configs";
+import { Logger } from "@/utils/log";
 
 const COOKIE_KEYS = {
   accessToken: APP_SESSION_COOKIE_KEY,

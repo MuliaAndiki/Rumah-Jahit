@@ -1,21 +1,23 @@
 'use client';
 
-import { useState } from 'react';
+import { ChevronLeft, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ChevronLeft, LogOut } from 'lucide-react';
-import { cn } from '@/utils/classname';
+import { useState } from 'react';
+
 import { SIDEBAR_MENU } from '@/configs/app.config';
-import { PickResponeGetMe } from '@/types/res/auth.respone';
-import { useAppNameSpace } from '@/hooks/useAppNameSpace';
 import {
-  SIDEBAR_CONTENT_TRANSITION,
-  SIDEBAR_WIDTH_TRANSITION,
   getSidebarAsideClassName,
   getSidebarDividerVisibility,
   getSidebarLabelVisibility,
   getSidebarSectionVisibility,
+  SIDEBAR_CONTENT_TRANSITION,
+  SIDEBAR_WIDTH_TRANSITION,
 } from '@/core/layouts/sidebar.layout';
+import { useAppNameSpace } from '@/hooks/useAppNameSpace';
+import { PickResponeGetMe } from '@/types/res/auth.respone';
+import { cn } from '@/utils/classname';
+
 import { SidebarExpandable } from './SidebarExpandable';
 interface SidebarProps {
   isOpen: boolean;
@@ -191,7 +193,7 @@ export function Sidebar({ isOpen, isPending, onLogout, getme, isLoading }: Sideb
         </div>
       </aside>
 
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white  border-t border-border z-50 flex justify-around items-center px-2 py-2 pb-safe shadow-[0_-4px_15px_rgba(0,0,0,0.05)]">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-background  border-t border-border z-50 flex justify-around items-center px-2 py-2 pb-safe shadow-[0_-4px_15px_rgba(0,0,0,0.05)]">
         {SIDEBAR_MENU.map((item) => {
           const isActive = isActiveMenu(item.url);
           const IconComponent = item.icon;

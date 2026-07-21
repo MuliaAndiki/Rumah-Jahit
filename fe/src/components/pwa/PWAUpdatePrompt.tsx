@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { usePWAUpdate } from '@/hooks/usePWAUpdate';
+
 import { Button } from '@/components/atoms';
 import {
   AlertDialog,
@@ -13,6 +13,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/atoms';
+import { usePWAUpdate } from '@/hooks/usePWAUpdate';
 
 export function PWAUpdatePrompt() {
   const { updateAvailable, updateApp, skipUpdate } = usePWAUpdate();

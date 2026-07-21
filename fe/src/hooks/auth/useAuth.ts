@@ -1,5 +1,5 @@
-import { useGetMeQuery } from './state/query';
 import { useLoginMutation, useLogoutMutation, useRegisterMutation, useUpdateProfileMutation } from './state/mutate';
+import { useGetMeQuery } from './state/query';
 
 export function useAuth(options?: { enabledGetMe?: boolean }) {
   const login = useLoginMutation();

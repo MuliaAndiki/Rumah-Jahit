@@ -1,8 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { useApi } from "@/hooks/useApi";
+
 import PublicCatalogSection from "@/components/page/public/katalog/PublicCatalogSection";
+import { useApi } from "@/hooks/useApi";
 
 export default function PublicCatalogContainer() {
   const [selectedCategory, setSelectedCategory] = React.useState<string>("");
@@ -17,6 +18,7 @@ export default function PublicCatalogContainer() {
     },
     enabledCatalogList: true,
     enabledCategories: true,
+    enabledGetMe: false,
   });
 
   const { data: catalogRes, isLoading: isCatalogLoading } = api.catalog.getCatalogItems;

@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { Api } from "@/services/props.service";
+
 import { queryKey } from "@/configs/query-key";
+import { Api } from "@/services/props.service";
 
 export function useGetCatalogItemsQuery(
   params?: {

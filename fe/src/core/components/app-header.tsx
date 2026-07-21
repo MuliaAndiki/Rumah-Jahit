@@ -1,10 +1,12 @@
 'use client';
 
-import { navigationMenuConfig } from '@/configs/app.config';
-import { cn } from '@/utils/classname';
+import { Icon } from '@iconify/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { Icon } from '@iconify/react';
+
+import { navigationMenuConfig } from '@/configs/app.config';
+import { cn } from '@/utils/classname';
+
 import ThemeToggle from './theme-toggle';
 
 export default function AppHeader() {

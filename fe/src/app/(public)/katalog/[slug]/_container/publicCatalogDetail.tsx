@@ -1,9 +1,10 @@
 "use client";
 
-import * as React from "react";
 import { useParams } from "next/navigation";
-import { useApi } from "@/hooks/useApi";
+import * as React from "react";
+
 import PublicCatalogDetailSection from "@/components/page/public/katalog/PublicCatalogDetailSection";
+import { useApi } from "@/hooks/useApi";
 
 export default function PublicCatalogDetailContainer() {
   const params = useParams();
@@ -19,6 +20,7 @@ export default function PublicCatalogDetailContainer() {
     },
     enabledCatalogDetail: true,
     enabledCatalogList: true,
+    enabledGetMe: false,
   });
 
   const { data: itemRes, isLoading: isItemLoading } = api.catalog.getCatalogItemById;

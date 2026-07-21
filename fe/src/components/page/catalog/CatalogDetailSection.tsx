@@ -1,8 +1,9 @@
-import * as React from "react";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import * as React from "react";
+
 import { Button, Input } from "@/components/atoms";
-import type { CatalogItemData, CategoryItem, CatalogImageItem } from "@/services/props.service";
+import type { CatalogImageItem,CatalogItemData, CategoryItem } from "@/services/props.service";
 
 interface CatalogDetailSectionProps {
   state: {

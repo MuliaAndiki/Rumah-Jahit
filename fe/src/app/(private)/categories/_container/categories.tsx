@@ -1,8 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { useApi } from "@/hooks/useApi";
+
 import CategoriesSection from "@/components/page/categories/CategoriesSection";
+import { useApi } from "@/hooks/useApi";
 import type { CategoryItem } from "@/services/props.service";
 
 export default function CategoriesContainer() {

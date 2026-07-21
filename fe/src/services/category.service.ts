@@ -1,11 +1,11 @@
 import { CATEGORY_ENDPOINTS } from "../endpoints/category.endpoints";
-import { ClientGetResponse, ClientPostResponse, ClientPutResponse, ClientDelResponse } from "./http";
-import { toServiceResponse, StandardResponse } from "./service-response";
+import { ClientDelResponse,ClientGetResponse, ClientPostResponse, ClientPutResponse, ClientPublicGetResponse } from "./http";
 import type { CategoryItem, CategoryPayload } from "./props.service";
+import { StandardResponse,toServiceResponse } from "./service-response";
 
 class CategoryService {
   public async GetCategories(): Promise<StandardResponse<CategoryItem[]>> {
-    const res = await ClientGetResponse<CategoryItem[]>(CATEGORY_ENDPOINTS.LIST);
+    const res = await ClientPublicGetResponse<CategoryItem[]>(CATEGORY_ENDPOINTS.LIST);
     return toServiceResponse(res, {
       message: "Daftar kategori berhasil diambil",
       statusCode: 200,

@@ -1,10 +1,11 @@
 "use client";
 
-import * as React from "react";
 import { useRouter } from "next/navigation";
-import { useApi } from "@/hooks/useApi";
+import * as React from "react";
+
 import DashboardSection from "@/components/page/dashboard/DashboardSection";
 import MainLayout from "@/core/layouts/main.layout";
+import { useApi } from "@/hooks/useApi";
 
 export default function DashboardContainer() {
   const router = useRouter();

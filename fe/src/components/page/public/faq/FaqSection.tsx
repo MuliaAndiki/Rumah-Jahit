@@ -1,6 +1,6 @@
-import * as React from "react";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import * as React from "react";
 
 export interface FaqItem {
   question: string;

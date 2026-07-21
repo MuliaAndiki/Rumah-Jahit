@@ -1,6 +1,7 @@
-import * as React from "react";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import * as React from "react";
+
 import type { CatalogItemData } from "@/services/props.service";
 
 interface PublicCatalogDetailSectionProps {
@@ -16,6 +17,17 @@ interface PublicCatalogDetailSectionProps {
 }
 
 const PublicCatalogDetailSection: React.FC<PublicCatalogDetailSectionProps> = ({ state, service }) => {
+  const item = state.item;
+  
+  const sortedImages = React.useMemo(() => {
+    if (!item?.images || item.images.length === 0) return [];
+    return [...item.images].sort((a, b) => {
+      if (a.isPrimary) return -1;
+      if (b.isPrimary) return 1;
+      return (a.displayOrder || 0) - (b.displayOrder || 0);
+    });
+  }, [item?.images]);
+
   if (state.isLoading) {
     return (
       <div className="w-full min-h-[80vh] flex flex-col items-center justify-center space-y-4 pt-28 pb-20 text-muted-foreground">
@@ -25,7 +37,7 @@ const PublicCatalogDetailSection: React.FC<PublicCatalogDetailSectionProps> = ({
     );
   }
 
-  if (!state.item) {
+  if (!item) {
     return (
       <div className="w-full min-h-[80vh] flex flex-col items-center justify-center space-y-6 pt-28 pb-20 text-center px-6">
         <Icon icon="mdi:hanger" className="text-6xl text-muted-foreground opacity-30" />
@@ -45,15 +57,7 @@ const PublicCatalogDetailSection: React.FC<PublicCatalogDetailSectionProps> = ({
     );
   }
 
-  const { item } = state;
-  const sortedImages = React.useMemo(() => {
-    if (!item.images || item.images.length === 0) return [];
-    return [...item.images].sort((a, b) => {
-      if (a.isPrimary) return -1;
-      if (b.isPrimary) return 1;
-      return (a.displayOrder || 0) - (b.displayOrder || 0);
-    });
-  }, [item.images]);
+
 
   const activeImg = sortedImages[state.activeImageIndex] || sortedImages[0];
   const waMessage = encodeURIComponent(

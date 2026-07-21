@@ -1,6 +1,6 @@
 import crypto from "crypto";
-import { env } from "@/config/config.config";
 
+import { env } from "@/configs";
 export type CloudinaryUploadType = "image" | "audio" | "video" | "raw" | "auto";
 
 export interface CloudinarySignedUploadConfig {
@@ -17,18 +17,17 @@ export function getCloudinarySignedUploadConfig(
   customFolder = "rumah_jahit/catalog"
 ): CloudinarySignedUploadConfig {
   const cloudName =
-    env.NEXT_CLOUDINARY_CLOUD_NAME ||
     process.env.NEXT_CLOUDINARY_CLOUD_NAME ||
     process.env.CLOUDINARY_CLOUD_NAME ||
     process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME ||
     "";
   const apiKey =
-    env.NEXT_CLOUDINARY_API_KEY ||
+   
     process.env.NEXT_CLOUDINARY_API_KEY ||
     process.env.CLOUDINARY_API_KEY ||
     "";
   const apiSecret =
-    env.NEXT_CLOUDINARY_API_SECRET ||
+  
     process.env.NEXT_CLOUDINARY_API_SECRET ||
     process.env.CLOUDINARY_API_SECRET ||
     "";

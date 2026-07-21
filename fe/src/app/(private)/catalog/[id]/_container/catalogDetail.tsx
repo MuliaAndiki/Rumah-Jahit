@@ -1,10 +1,11 @@
 "use client";
 
-import * as React from "react";
 import { useParams } from "next/navigation";
+import * as React from "react";
+
+import CatalogDetailSection from "@/components/page/catalog/CatalogDetailSection";
 import { useApi } from "@/hooks/useApi";
 import { Api } from "@/services/props.service";
-import CatalogDetailSection from "@/components/page/catalog/CatalogDetailSection";
 
 export default function CatalogDetailContainer() {
   const params = useParams();

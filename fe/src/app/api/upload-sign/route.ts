@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
+
 import {
-  getCloudinarySignedUploadConfig,
   type CloudinaryUploadType,
+  getCloudinarySignedUploadConfig,
 } from "@/lib/cloudinary/sign-upload";
 
 export const runtime = "nodejs";

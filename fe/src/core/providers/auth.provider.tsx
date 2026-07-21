@@ -1,52 +1,68 @@
 'use client';
 
-import React from 'react';
-import { useSelector } from 'react-redux';
-import type { RootState } from '@/stores/store';
-import { usePathname, useRouter } from 'next/navigation';
 import { getCookie } from 'cookies-next';
-import { useAppDispatch } from '@/hooks/dispatch/dispatch';
-import { setCurrentUser } from '@/stores/authSlice/authSlice';
+import { usePathname, useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+
 import { APP_SESSION_COOKIE_KEY } from '@/configs/cookies.config';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const pathname = usePathname();
-  const currentUser = useSelector((state: RootState) => state.auth.currentUser);
-  const dispatch = useAppDispatch();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
-  React.useEffect(() => {
-    if (!currentUser?.user?.token) {
-      const token = getCookie(APP_SESSION_COOKIE_KEY);
-      if (token) {
-        dispatch(setCurrentUser({ user: { token } } as any));
-      }
-    }
-  }, [currentUser, dispatch]);
+  useEffect(() => {
+    // Cek token langsung dari cookie
+    const token = getCookie(APP_SESSION_COOKIE_KEY);
+    setIsAuthenticated(Boolean(token));
+  }, [pathname]); // Re-evaluasi tiap ada perubahan rute
 
-  React.useEffect(() => {
+  useEffect(() => {
+    // Jangan jalankan logika redirect jika pengecekan awal auth belum selesai
+    if (isAuthenticated === null) return;
+
+    // 1. Definisikan halaman public
+    const isPublicRoute =
+      pathname === '/' ||
+      pathname?.startsWith('/home') ||
+      pathname?.startsWith('/faq') ||
+      pathname?.startsWith('/katalog') ||
+      pathname?.startsWith('/layanan-dan-proses') ||
+      pathname?.startsWith('/lokasi-dan-kontak') ||
+      pathname?.startsWith('/tentang-kami');
+
+    // 2. Definisikan halaman privat
     const isPrivateRoute =
       pathname?.startsWith('/dashboard') ||
       pathname?.startsWith('/categories') ||
       pathname?.startsWith('/catalog') ||
       pathname?.startsWith('/settings');
 
+    // 3. Definisikan halaman auth
     const isAuthPage =
       pathname?.startsWith('/login') ||
       pathname?.startsWith('/register');
 
-    const isAuthenticated = Boolean(currentUser?.user?.token);
+    // Rules Navigasi:
+    
+    // Jika mengakses halaman auth tapi sudah login -> ke dashboard
+    if (isAuthenticated && isAuthPage) {
+      router.replace('/dashboard');
+      return;
+    }
 
+    // Jika mengakses halaman privat tapi belum login -> ke login
     if (!isAuthenticated && isPrivateRoute) {
       router.replace('/login');
       return;
     }
 
-    if (isAuthenticated && isAuthPage) {
-      router.replace('/dashboard');
+    // Jika halaman public, biarkan akses masuk (tidak ada redirect)
+    if (isPublicRoute) {
       return;
     }
-  }, [pathname, currentUser, router]);
+
+  }, [pathname, isAuthenticated, router]);
 
   return <>{children}</>;
 }

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+
 import FaqContainer from "./_container/faq";
 
 export const metadata: Metadata = {

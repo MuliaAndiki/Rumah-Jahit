@@ -1,6 +1,7 @@
-import * as React from "react";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import * as React from "react";
+
 import type { CatalogItemData, CategoryItem } from "@/services/props.service";
 
 interface PublicCatalogSectionProps {
