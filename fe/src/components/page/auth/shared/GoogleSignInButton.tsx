@@ -1,6 +1,7 @@
 
-import * as React from "react";
 import { Icon } from "@iconify/react";
+import * as React from "react";
+
 import { ActionButton } from "@/components/wrapper";
 
 interface GoogleSignInButtonProps {

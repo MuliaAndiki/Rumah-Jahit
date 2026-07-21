@@ -1,18 +1,19 @@
 "use client";
 
-import * as React from "react";
-import { saveTokens } from "@/server/auth-cookies";
-import { savePwaAuthSession } from "@/utils/pwa-auth.storage";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useApi } from "@/hooks/useApi";
+import { useRouter } from "next/navigation";
+import * as React from "react";
+import { useForm } from "react-hook-form";
+
 import LoginSection from "@/components/page/auth/LoginSection";
+import { useApi } from "@/hooks/useApi";
 import {
-  loginSchema,
   type LoginFormValues,
+  loginSchema,
 } from "@/schemas/auth.schema";
+import { saveTokens } from "@/server/auth-cookies";
 import type { AuthMode } from "@/types";
+import { savePwaAuthSession } from "@/utils/pwa-auth.storage";
 import {
   getSavedAccounts,
   saveAccountToStorage,
@@ -21,7 +22,11 @@ import {
 
 export default function LoginContainer() {
   const router = useRouter();
-  const api = useApi();
+  const api = useApi({
+    enabledGetMe: false,
+    enabledCatalogList: false,
+    enabledCategories: false,
+  });
 
   const [isAuth, setIsAuth] = React.useState<AuthMode>("login");
   const [savedAccounts, setSavedAccounts] = React.useState<SavedLoginAccount[]>([]);
@@ -37,7 +42,6 @@ export default function LoginContainer() {
     },
   });
 
- 
   React.useEffect(() => {
     const accounts = getSavedAccounts();
     setSavedAccounts(accounts);
@@ -56,29 +60,7 @@ export default function LoginContainer() {
         password: values.password,
       },
       {
-        onSuccess: async (res) => {
-          if (res.data?.token) {
-            const accessToken = res.data.token;
-            const refreshToken = res.data.refreshToken || res.data.token;
-            const role = res.data.user?.role || "ADMIN";
-            try {
-              await saveTokens({ accessToken, refreshToken, role });
-            } catch (e) {
-              console.error("Gagal menyimpan cookies login di container:", e);
-            }
-            if (typeof window !== "undefined") {
-              localStorage.setItem("token", accessToken);
-              document.cookie = `rjahit_session=${accessToken}; path=/; max-age=604800; SameSite=Lax`;
-              document.cookie = `rjahit_refres=${refreshToken}; path=/; max-age=2592000; SameSite=Lax`;
-              if (role) document.cookie = `rjahit_role=${role}; path=/; max-age=2592000; SameSite=Lax`;
-            }
-            savePwaAuthSession({
-              accessToken,
-              refreshToken,
-              user: res.data.user,
-              role,
-            });
-          }
+        onSuccess: (res) => {
           saveAccountToStorage({
             username: values.username,
             name: res.data?.user?.name || values.username,

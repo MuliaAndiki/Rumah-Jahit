@@ -1,8 +1,8 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/atoms';
-import { cn } from '@/utils/classname';
-import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { CheckIcon, XCircle, ChevronDown, XIcon, WandSparkles } from 'lucide-react';
+import { CheckIcon, ChevronDown, WandSparkles,XCircle, XIcon } from 'lucide-react';
+import React from 'react';
+
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/atoms';
 import { Separator } from '@/components/atoms';
 import { Button } from '@/components/atoms';
 import { Badge } from '@/components/atoms';
@@ -16,6 +16,7 @@ import {
   CommandList,
   CommandSeparator,
 } from '@/components/atoms';
+import { cn } from '@/utils/classname';
 
 const multiSelectVariants = cva('m-1 transition ease-in-out', {
   variants: {

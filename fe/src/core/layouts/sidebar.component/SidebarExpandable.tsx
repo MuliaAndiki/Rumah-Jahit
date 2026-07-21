@@ -1,11 +1,11 @@
 'use client';
 
-import { cn } from '@/utils/classname';
 import {
-  SIDEBAR_CONTENT_TRANSITION,
   getSidebarLabelVisibility,
   getSidebarSectionVisibility,
+  SIDEBAR_CONTENT_TRANSITION,
 } from '@/core/layouts/sidebar.layout';
+import { cn } from '@/utils/classname';
 
 type SidebarExpandableVariant = 'label' | 'section';
 

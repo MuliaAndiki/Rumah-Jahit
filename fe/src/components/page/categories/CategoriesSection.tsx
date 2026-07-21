@@ -1,6 +1,7 @@
-import * as React from "react";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import * as React from "react";
+
 import { Button, Input } from "@/components/atoms";
 import { AdminNavigationTabs } from "@/components/molecules/AdminNavigationTabs";
 import type { CategoryItem } from "@/services/props.service";
@@ -85,7 +86,8 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({ state, service })
                     <th className="py-3 px-4">Slug</th>
                     <th className="py-3 px-4">Jumlah Item</th>
                     <th className="py-3 px-4">Dibuat Pada</th>
-                    <th className="py-3 px-4 text-right">Aksi</th>
+                    <th className="py-3 px-4 text-right">Edit</th>
+                      <th className="py-3 px-4 text-right">Hapus</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/40 text-sm">
@@ -109,7 +111,10 @@ const CategoriesSection: React.FC<CategoriesSectionProps> = ({ state, service })
                           <Icon icon="mdi:pencil-outline" />
                           Edit
                         </button>
-                        <button
+                       
+                      </td>
+                      <td className="py-3 px-3 text-xs text-muted-foreground">
+                         <button
                           type="button"
                           onClick={() => state.setDeleteTargetId(cat.id)}
                           className="px-3 py-1.5 rounded-lg bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground font-bold text-xs transition-colors inline-flex items-center gap-1"

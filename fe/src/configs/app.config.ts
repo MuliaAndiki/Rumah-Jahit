@@ -1,5 +1,5 @@
+import { BookOpen, History, Home, User } from 'lucide-react';
 import React from 'react';
-import { Home, BookOpen, History, User } from 'lucide-react';
 
 interface AppConfig {
   name: string;
@@ -42,13 +42,13 @@ export type PropsParams = {
 };
 
 export const appConfig: AppConfig = {
-  name: 'Rumah Jahit Bespoke Tailoring',
-  description: 'Pinnacle of Contemporary Quiet Luxury Tailoring & Bespoke Lookbook',
+  name: 'Rumah Jahit Khusus Wanita',
+  description: 'Spesialis Busana Wanita Custom, Kebaya, Gaun Pesta & Dress Eksklusif',
   logo: '/images/logo.png',
   metadata: {
-    title: 'Rumah Jahit - Bespoke Tailoring Lookbook',
-    description: 'Bespoke tailoring with contemporary Quiet Luxury design.',
-    keywords: ['Bespoke Tailor', 'Rumah Jahit', 'Quiet Luxury', 'Kebaya', 'Jas Formal', 'Tailoring'],
+    title: 'Rumah Jahit Khusus Wanita - Lookbook Busana Eksklusif',
+    description: 'Jasa jahit custom busana wanita dengan desain elegan dan presisi tinggi.',
+    keywords: ['Rumah Jahit Wanita', 'Rumah Jahit', 'Kebaya', 'Gaun Pesta', 'Dress Custom', 'Jahit Busana Wanita'],
     author: 'Rumah Jahit Studio',
     image: '/images/logo.png',
   },
@@ -91,7 +91,7 @@ export const navigationMenuConfig: NavigationMenuConfig = {
     {
       title: 'Beranda',
       href: '/',
-      description: 'Halaman utama & filosofi bespoke tailoring',
+      description: 'Halaman utama & filosofi jahit busana wanita eksklusif',
     },
     {
       title: 'Tentang Kami',
@@ -101,12 +101,12 @@ export const navigationMenuConfig: NavigationMenuConfig = {
     {
       title: 'Layanan & Proses',
       href: '/layanan-dan-proses',
-      description: 'Spesialisasi layanan dan 4 langkah alur kerja bespoke',
+      description: 'Spesialisasi layanan busana wanita dan 4 langkah alur kerja',
     },
     {
       title: 'Katalog Koleksi',
       href: '/katalog',
-      description: 'Grid lookbook portofolio jahitan lengkap',
+      description: 'Grid lookbook portofolio busana wanita lengkap',
     },
     {
       title: 'Lokasi & Janji Temu',
@@ -116,7 +116,7 @@ export const navigationMenuConfig: NavigationMenuConfig = {
     {
       title: 'FAQ',
       href: '/faq',
-      description: 'Pertanyaan umum seputar layanan jahitan bespoke',
+      description: 'Pertanyaan umum seputar layanan jahit busana wanita',
     },
   ],
 };

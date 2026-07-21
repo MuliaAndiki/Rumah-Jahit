@@ -1,6 +1,7 @@
-import * as React from "react";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import * as React from "react";
+
 import type { CatalogItemData, CategoryItem } from "@/services/props.service";
 
 interface PublicCatalogSectionProps {
@@ -24,13 +25,13 @@ const PublicCatalogSection: React.FC<PublicCatalogSectionProps> = ({ state, serv
         {/* Editorial Header */}
         <div className="text-center space-y-4 max-w-3xl mx-auto border-b border-border/80 pb-12">
           <span className="text-xs font-sans font-semibold uppercase tracking-[0.3em] text-muted-foreground">
-            Bespoke Portfolio &bull; Lookbook
+            Portofolio Busana Wanita &bull; Lookbook
           </span>
           <h1 className="font-serif text-4xl sm:text-6xl font-normal text-foreground tracking-tight">
-            Katalog Jahitan Bespoke
+            Katalog Busana Wanita Custom
           </h1>
           <p className="font-serif text-lg text-muted-foreground leading-relaxed">
-            Setiap rancangan adalah manifestasi dari ketepatan siluet, material kelas dunia, dan sentuhan tangan master penjahit kami. Pilih model dan mulai konsultasi personal Anda via WhatsApp.
+            Setiap rancangan adalah manifestasi dari keindahan siluet keanggunan wanita, material kelas atas, dan sentuhan detail presisi dari penjahit berpengalaman kami. Pilih model dan konsultasikan impian busana Anda via WhatsApp.
           </p>
 
           {/* Search Input */}

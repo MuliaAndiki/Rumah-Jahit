@@ -1,9 +1,9 @@
 import authService, { type UpdateProfilePayload } from "./auth.service";
-import categoryService from "./category.service";
 import catalogService from "./catalog.service";
+import categoryService from "./category.service";
 import imageService from "./image.service";
+import { StandardResponse,WrapApi } from "./service-response";
 import uploadService from "./upload.service";
-import { WrapApi, StandardResponse } from "./service-response";
 
 export type { StandardResponse, UpdateProfilePayload };
 

@@ -1,6 +1,7 @@
-import * as React from "react";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import * as React from "react";
+
 import type { CatalogItemData } from "@/services/props.service";
 
 interface PublicCatalogDetailSectionProps {
@@ -16,16 +17,27 @@ interface PublicCatalogDetailSectionProps {
 }
 
 const PublicCatalogDetailSection: React.FC<PublicCatalogDetailSectionProps> = ({ state, service }) => {
+  const item = state.item;
+  
+  const sortedImages = React.useMemo(() => {
+    if (!item?.images || item.images.length === 0) return [];
+    return [...item.images].sort((a, b) => {
+      if (a.isPrimary) return -1;
+      if (b.isPrimary) return 1;
+      return (a.displayOrder || 0) - (b.displayOrder || 0);
+    });
+  }, [item?.images]);
+
   if (state.isLoading) {
     return (
       <div className="w-full min-h-[80vh] flex flex-col items-center justify-center space-y-4 pt-28 pb-20 text-muted-foreground">
         <Icon icon="mdi:loading" className="animate-spin text-4xl text-primary" />
-        <p className="font-serif text-lg">Memuat rincian karya bespoke...</p>
+        <p className="font-serif text-lg">Memuat rincian karya busana custom...</p>
       </div>
     );
   }
 
-  if (!state.item) {
+  if (!item) {
     return (
       <div className="w-full min-h-[80vh] flex flex-col items-center justify-center space-y-6 pt-28 pb-20 text-center px-6">
         <Icon icon="mdi:hanger" className="text-6xl text-muted-foreground opacity-30" />
@@ -45,19 +57,11 @@ const PublicCatalogDetailSection: React.FC<PublicCatalogDetailSectionProps> = ({
     );
   }
 
-  const { item } = state;
-  const sortedImages = React.useMemo(() => {
-    if (!item.images || item.images.length === 0) return [];
-    return [...item.images].sort((a, b) => {
-      if (a.isPrimary) return -1;
-      if (b.isPrimary) return 1;
-      return (a.displayOrder || 0) - (b.displayOrder || 0);
-    });
-  }, [item.images]);
+
 
   const activeImg = sortedImages[state.activeImageIndex] || sortedImages[0];
   const waMessage = encodeURIComponent(
-    `Halo Rumah Jahit Studio, saya sangat tertarik untuk berkonsultasi mengenai pembuatan model busana bespoke: "${item.title}"${item.priceStart ? ` (Mulai IDR ${Number(item.priceStart).toLocaleString("id-ID")})` : ""}. Apakah bisa diinfokan jadwal fitting berikutnya?`
+    `Halo Rumah Jahit Studio, saya sangat tertarik untuk berkonsultasi mengenai pembuatan model busana wanita: "${item.title}"${item.priceStart ? ` (Mulai IDR ${Number(item.priceStart).toLocaleString("id-ID")})` : ""}. Apakah bisa diinfokan jadwal fitting berikutnya?`
   );
   const waUrl = `https://wa.me/6281122334455?text=${waMessage}`;
 
@@ -68,7 +72,7 @@ const PublicCatalogDetailSection: React.FC<PublicCatalogDetailSectionProps> = ({
         <nav className="flex items-center space-x-2 font-serif text-sm text-muted-foreground border-b border-border/60 pb-4">
           <Link href="/" className="hover:text-foreground transition-colors">Lookbook</Link>
           <span>/</span>
-          <Link href="/katalog" className="hover:text-foreground transition-colors">Katalog Bespoke</Link>
+          <Link href="/katalog" className="hover:text-foreground transition-colors">Katalog Koleksi</Link>
           <span>/</span>
           <span className="text-foreground font-medium truncate max-w-xs">{item.title}</span>
         </nav>
@@ -123,7 +127,7 @@ const PublicCatalogDetailSection: React.FC<PublicCatalogDetailSectionProps> = ({
           <div className="lg:col-span-5 space-y-8 sticky top-32">
             <div className="space-y-4 border-b border-border/80 pb-8">
               <span className="text-xs font-sans font-semibold uppercase tracking-[0.3em] text-muted-foreground block">
-                Bespoke Specifications
+                Spesifikasi Busana Custom
               </span>
               <h1 className="font-serif text-4xl sm:text-5xl font-normal text-foreground leading-tight">
                 {item.title}
@@ -160,7 +164,7 @@ const PublicCatalogDetailSection: React.FC<PublicCatalogDetailSectionProps> = ({
                 Filosofi &amp; Detail Siluet
               </h3>
               <div className="font-serif text-lg text-foreground/90 leading-relaxed space-y-4 whitespace-pre-line">
-                {item.description || "Rancangan bespoke dengan konstruksi kerah eksklusif, fitting anatomis presisi, serta pemilihan kain impor berkualitas tinggi yang diproses dengan ketelitian jahitan tangan master penjahit kami."}
+                {item.description || "Rancangan busana wanita eksklusif dengan fitting anatomis presisi, serta pemilihan kain impor berkualitas tinggi yang diproses dengan ketelitian jahitan tangan penjahit berpengalaman kami."}
               </div>
             </div>
 

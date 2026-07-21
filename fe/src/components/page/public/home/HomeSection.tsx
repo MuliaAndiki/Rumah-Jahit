@@ -1,6 +1,7 @@
-import * as React from "react";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import * as React from "react";
+
 import type { CatalogItemData } from "@/services/props.service";
 
 interface HomeSectionProps {
@@ -20,7 +21,7 @@ const HomeSection: React.FC<HomeSectionProps> = ({ state }) => {
 
         <div className="relative max-w-5xl mx-auto text-center space-y-8 z-10">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 border border-border/80 bg-background text-[11px] font-sans uppercase tracking-[0.3em] text-muted-foreground">
-            <span>Bespoke Tailoring Atelier &bull; Jakarta Selatan</span>
+            <span>Aceh Tengah</span>
           </div>
 
           <h1 className="font-serif text-4xl sm:text-6xl md:text-7xl font-normal tracking-tight text-foreground leading-[1.15]">
@@ -41,20 +42,20 @@ const HomeSection: React.FC<HomeSectionProps> = ({ state }) => {
               <Icon icon="mdi:arrow-right" className="text-xl" />
             </Link>
             <Link
-              href="https://wa.me/6281122334455"
+              href="https://wa.me/6285294988446"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-8 py-4 bg-background text-foreground border border-foreground/80 font-serif text-lg tracking-wide hover:bg-muted/30 transition-colors flex items-center justify-center gap-2"
             >
               <Icon icon="mdi:whatsapp" className="text-xl text-emerald-600" />
-              <span>Konsultasi Bespoke</span>
+              <span>Konsultasi</span>
             </Link>
           </div>
 
           <div className="pt-12 grid grid-cols-3 gap-6 max-w-2xl mx-auto border-t border-border/60 font-serif text-center">
             <div>
               <p className="text-2xl font-bold text-foreground">100%</p>
-              <p className="text-xs text-muted-foreground uppercase tracking-wider font-sans mt-1">Pola Bespoke Personal</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-wider font-sans mt-1">Pola Custom Personal</p>
             </div>
             <div>
               <p className="text-2xl font-bold text-foreground">Super 150s+</p>
@@ -97,7 +98,7 @@ const HomeSection: React.FC<HomeSectionProps> = ({ state }) => {
             <div className="aspect-3/4 bg-muted border border-border/80 overflow-hidden relative">
               <img
                 src="https://images.unsplash.com/photo-1594938298603-c8148c4dae35?q=80&w=800&auto=format&fit=crop"
-                alt="Bespoke Tailoring Craftsmanship"
+                alt="Custom Tailoring Craftsmanship"
                 className="w-full h-full object-cover filter grayscale contrast-125 hover:scale-105 transition-transform duration-700"
               />
             </div>
@@ -210,7 +211,7 @@ const HomeSection: React.FC<HomeSectionProps> = ({ state }) => {
             Mengapa Memilih Atelier Kami
           </h2>
           <p className="font-serif text-base text-muted-foreground leading-relaxed">
-            Keunggulan mendasar yang menjadikan Rumah Jahit rujukan utama busana formal dan ceremonial di Jakarta.
+            Keunggulan mendasar yang menjadikan Rumah Jahit rujukan utama busana wanita formal dan kebaya di Takengon, Aceh Tengah.
           </p>
         </div>
 
@@ -283,12 +284,12 @@ const HomeSection: React.FC<HomeSectionProps> = ({ state }) => {
                   <Icon icon="mdi:star" />
                 </div>
                 <p className="font-serif text-base text-foreground italic leading-relaxed">
-                  &ldquo;Jas wedding saya dikerjakan dengan presisi luar biasa. Fitting kedua langsung sempurna tanpa perlu banyak koreksi. Bagian bahunya sangat kokoh dan nyaman dipakai sepanjang hari resepsi.&rdquo;
+                  &ldquo;Gaun pengantin saya dikerjakan dengan presisi luar biasa. Fitting kedua langsung sempurna tanpa perlu banyak koreksi. Siluet korsetnya sangat kokoh dan nyaman dipakai sepanjang hari resepsi.&rdquo;
                 </p>
               </div>
               <div className="border-t border-border/60 pt-4">
-                <p className="font-serif text-lg font-bold text-foreground">Hendra &amp; Clarissa</p>
-                <p className="font-sans text-xs uppercase tracking-widest text-muted-foreground">Bespoke Wedding Tuxedo &bull; Jakarta</p>
+                <p className="font-serif text-lg font-bold text-foreground">Clarissa &amp; Keluarga</p>
+                <p className="font-sans text-xs uppercase tracking-widest text-muted-foreground">Gaun Pengantin Custom &bull; Takengon</p>
               </div>
             </div>
 
@@ -302,12 +303,12 @@ const HomeSection: React.FC<HomeSectionProps> = ({ state }) => {
                   <Icon icon="mdi:star" />
                 </div>
                 <p className="font-serif text-base text-foreground italic leading-relaxed">
-                  &ldquo;Sebagai pengacara yang bertugas di persidangan tiap hari, kenyamanan dan potongan jas adalah segalanya. Rumah Jahit memahami struktur tubuh saya dan hasil jasnya memberikan rasa percaya diri tinggi.&rdquo;
+                  &ldquo;Sebagai profesional yang rutin menghadiri jamuan resmi, kenyamanan dan potongan gaun adalah segalanya. Rumah Jahit memahami anatomi tubuh saya dan hasil busananya memberikan rasa percaya diri tinggi.&rdquo;
                 </p>
               </div>
               <div className="border-t border-border/60 pt-4">
-                <p className="font-serif text-lg font-bold text-foreground">Bambang S., S.H., M.H.</p>
-                <p className="font-sans text-xs uppercase tracking-widest text-muted-foreground">Senior Attorney &bull; Kebayoran Baru</p>
+                <p className="font-serif text-lg font-bold text-foreground">Ir. Sari Wulandari, M.T.</p>
+                <p className="font-sans text-xs uppercase tracking-widest text-muted-foreground">Gaun Pesta Eksklusif &bull; Aceh Tengah</p>
               </div>
             </div>
 
@@ -326,7 +327,7 @@ const HomeSection: React.FC<HomeSectionProps> = ({ state }) => {
               </div>
               <div className="border-t border-border/60 pt-4">
                 <p className="font-serif text-lg font-bold text-foreground">dr. Anisa Pratiwi</p>
-                <p className="font-sans text-xs uppercase tracking-widest text-muted-foreground">Bespoke Kebaya &bull; Menteng</p>
+                <p className="font-sans text-xs uppercase tracking-widest text-muted-foreground">Kebaya Custom &bull; Takengon</p>
               </div>
             </div>
           </div>
@@ -336,14 +337,14 @@ const HomeSection: React.FC<HomeSectionProps> = ({ state }) => {
       {/* CTA Section */}
       <section className="py-20 px-6 text-center max-w-4xl mx-auto space-y-6">
         <h2 className="font-serif text-3xl sm:text-4xl text-foreground font-normal">
-          Siap Merasakan Pengalaman Bespoke?
+          Siap Merasakan Pengalaman Jahit Custom?
         </h2>
         <p className="font-serif text-base text-muted-foreground max-w-xl mx-auto">
-          Hubungi master penjahit kami via WhatsApp atau kunjungi studio kami di Kebayoran Baru untuk konsultasi langsung.
+          Hubungi penjahit berpengalaman kami via WhatsApp atau kunjungi studio kami di Takengon untuk konsultasi langsung.
         </p>
         <div className="pt-2 flex flex-col sm:flex-row justify-center gap-4">
           <Link
-            href="https://wa.me/6281122334455"
+            href="https://wa.me/6285294988446"
             target="_blank"
             rel="noopener noreferrer"
             className="px-8 py-4 bg-primary text-primary-foreground font-serif text-lg tracking-wide hover:bg-primary/90 transition-colors inline-flex items-center justify-center gap-2"

@@ -1,5 +1,6 @@
-import * as React from "react";
 import { Icon } from "@iconify/react";
+import * as React from "react";
+
 import type { AdminUser } from "@/services/props.service";
 
 interface SettingsSectionProps {
@@ -24,7 +25,6 @@ interface SettingsSectionProps {
   service: {
     onUpdateProfile: (e: React.FormEvent) => void;
     onUpdatePassword: (e: React.FormEvent) => void;
-    onLogout: () => void;
   };
 }
 
@@ -39,7 +39,7 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({ state, service }) => 
   }
 
   return (
-    <div className="w-full space-y-10">
+    <div className="w-full space-y-10 bg-background p-4">
       {/* Page Title */}
       <div className="border-b border-border/80 pb-6 flex items-end justify-between">
         <div className="space-y-1">
@@ -50,14 +50,6 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({ state, service }) => 
             Pengaturan Akun Admin
           </h1>
         </div>
-        <button
-          type="button"
-          onClick={service.onLogout}
-          className="px-5 py-2.5 border border-destructive text-destructive font-serif text-sm hover:bg-destructive hover:text-white transition-colors flex items-center gap-2"
-        >
-          <Icon icon="mdi:logout" className="text-lg" />
-          <span>Keluar</span>
-        </button>
       </div>
 
       {/* Profile Info Form */}
@@ -73,7 +65,7 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({ state, service }) => 
 
         <form
           onSubmit={service.onUpdateProfile}
-          className="lg:col-span-2 border border-border/80 p-8 space-y-6 bg-card"
+          className="lg:col-span-2 border border-border/80 p-8 space-y-6 "
         >
           <div className="space-y-2">
             <label className="font-serif text-sm uppercase tracking-wider text-muted-foreground block">
@@ -97,7 +89,7 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({ state, service }) => 
               value={state.formEmail}
               onChange={(e) => state.setFormEmail(e.target.value)}
               placeholder="admin@rumahjahit.com"
-              className="w-full px-4 py-3 bg-muted/40 border border-border/80 font-serif text-base text-foreground placeholder:text-muted-foreground focus:bg-background focus:border-foreground transition-colors"
+              className="w-full px-4 py-3  border border-border/80 font-serif text-base text-foreground placeholder:text-muted-foreground focus:bg-background focus:border-foreground transition-colors"
             />
           </div>
 
@@ -137,7 +129,7 @@ const SettingsSection: React.FC<SettingsSectionProps> = ({ state, service }) => 
 
         <form
           onSubmit={service.onUpdatePassword}
-          className="lg:col-span-2 border border-border/80 p-8 space-y-6 bg-card"
+          className="lg:col-span-2 border border-border/80 p-8 space-y-6 "
         >
           <div className="space-y-2">
             <label className="font-serif text-sm uppercase tracking-wider text-muted-foreground block">

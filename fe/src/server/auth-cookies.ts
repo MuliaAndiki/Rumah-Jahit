@@ -1,13 +1,14 @@
 "use server";
 
 import { cookies } from "next/headers";
-import { Logger } from "@/utils/log";
+
 import {
   APP_SESSION_COOKIE_KEY,
   APP_SESSION_COOKIE_REFRESH,
   APP_SESSION_COOKIE_ROLE,
   AUTH_COOKIE_MAX_AGE,
 } from "@/configs";
+import { Logger } from "@/utils/log";
 
 const COOKIE_KEYS = {
   accessToken: APP_SESSION_COOKIE_KEY,
@@ -74,6 +75,30 @@ export async function saveTokens(tokens: AuthTokens): Promise<void> {
 
 export async function clearTokens(): Promise<void> {
   const store = await getCookieStore();
+  const isProduction = process.env.NODE_ENV === "production";
+
+  store.set(COOKIE_KEYS.accessToken, "", {
+    httpOnly: false,
+    secure: isProduction,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
+  store.set(COOKIE_KEYS.refreshToken, "", {
+    httpOnly: true,
+    secure: isProduction,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
+  store.set(COOKIE_KEYS.role, "", {
+    httpOnly: false,
+    secure: isProduction,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  });
+
   store.delete(COOKIE_KEYS.accessToken);
   store.delete(COOKIE_KEYS.refreshToken);
   store.delete(COOKIE_KEYS.role);

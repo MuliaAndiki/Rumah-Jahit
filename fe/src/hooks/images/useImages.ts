@@ -1,8 +1,8 @@
 import {
   useAddCatalogImagesMutation,
   useDeleteImageMutation,
-  useSetPrimaryImageMutation,
   useReorderImagesMutation,
+  useSetPrimaryImageMutation,
 } from "./state/mutate";
 
 export function useImages() {

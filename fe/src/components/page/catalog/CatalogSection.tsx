@@ -1,6 +1,7 @@
-import * as React from "react";
-import Link from "next/link";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
+import * as React from "react";
+
 import { Button, Input } from "@/components/atoms";
 import { AdminNavigationTabs } from "@/components/molecules/AdminNavigationTabs";
 import type { CatalogItemData, CategoryItem } from "@/services/props.service";
@@ -204,7 +205,7 @@ const CatalogSection: React.FC<CatalogSectionProps> = ({ state, service }) => {
                 <Input
                   type="text"
                   required
-                  placeholder="Contoh: Jas Formal Bespoke Super 150s"
+                  placeholder="Contoh: Kebaya Pengantin Modern Eksklusif"
                   value={state.formTitle}
                   onChange={(e) => state.setFormTitle(e.target.value)}
                   className="h-11 rounded-xl"

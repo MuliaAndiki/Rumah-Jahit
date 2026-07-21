@@ -1,16 +1,17 @@
-import * as React from "react";
+import { Icon } from "@iconify/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Icon } from "@iconify/react";
+import * as React from "react";
 import type { UseFormReturn } from "react-hook-form";
+
 import { Button } from "@/components/atoms";
-import { ActionButton } from "@/components/wrapper";
-import { DecoratedInput } from "@/components/wrapper";
-import { LoginSectionMotion } from "@/components/wrapper/LoginSectionMotion";
 import { Brid, Cloud, Sun } from "@/components/molecules";
 import AuthField from "@/components/page/auth/shared/AuthField";
 import GoogleSignInButton from "@/components/page/auth/shared/GoogleSignInButton";
 import SavedLoginAccounts from "@/components/page/auth/shared/SavedLoginAccounts";
+import { ActionButton } from "@/components/wrapper";
+import { DecoratedInput } from "@/components/wrapper";
+import { LoginSectionMotion } from "@/components/wrapper/LoginSectionMotion";
 import type {
   LoginFormValues,
 } from "@/schemas/auth.schema";
@@ -84,50 +85,12 @@ const LoginSection: React.FC<LoginSectionProps> = ({ state, service }) => {
   const loginErrors = state.loginForm.formState.errors;
 
   return (
-    <section className="w-full relative min-h-screen bg-linear-to-b from-primary to-primary/10 flex justify-center items-center ">
-      <div className="w-full grid grid-cols-1 grid-row-1 lg:grid-cols-2 z-1">
-        <div className="absolute top-90 left-40 hidden lg:block ">
-          <Brid />
-        </div>
-        <div className="absolute top-0">
-          <Cloud />
-        </div>
-        <div className="absolute lg:top-0 lg:right-0 md:block right-0 translate-x-20 top-0 ">
-          <Sun />
-        </div>
-        <div className="absolute top-60 right-[-10] z-[-1]">
-          <Cloud />
-        </div>
-        <div className="absolute top-40 right-210">
-          <Brid />
-        </div>
-        <div className="w-full flex justify-center items-center flex-col">
-          <Image
-            alt="icon"
-            src={"/maskot/hero.webp"}
-            width={370}
-            height={370}
-            className="w-58 md:w-120 h-auto z-0"
-          />
-          <div className="w-full max-w-lg hidden lg:block flex-col space-y-2 mt-2 items-center">
-            <GoogleSignInButton
-              onSuccess={handleGoogleSuccess}
-              disabled={service.isPending}
-            />
-            <ActionButton
-              iconLeft={<PersonOutlineRoundedIcon height="1em" />}
-              size={"lg"}
-              className="w-full"
-              variant={"outline"}
-              onClick={handleGuestSubmit}
-              disabled={service.isPending}
-            >
-              Masuk Sebagai Tamu
-            </ActionButton>
-          </div>
-        </div>
-        <div className="w-full flex justify-center items-center">
-          <div className="w-full p-10 rounded-lg bg-background lg:max-w-3xl max-w-sm space-y-4">
+    <section className="w-full relative min-h-screen bg-background flex justify-center items-center ">
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#e6e6e6_1px,transparent_1px),linear-gradient(to_bottom,#e6e6e6_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-40 dark:opacity-10 z-0 " />
+      <div className="w-full h-full z-1">
+      <div className="w-full">
+        <div className="w-full flex justify-center items-center z-1">
+          <div className="w-full p-10 rounded-lg bg-transparent lg:max-w-3xl max-w-sm space-y-6">
             <LoginSectionMotion authMode={state.isAuth}>
               {({ switchRef, formRef }) => (
                 <>
@@ -164,12 +127,12 @@ const LoginSection: React.FC<LoginSectionProps> = ({ state, service }) => {
                     </ActionButton>
                   </div>
                   <div className="relative py-2">
-                    <div className="absolute inset-0 flex items-center">
+                    <div className="absolute inset-0 flex items-center ">
                       <span className="w-full border-t border-border/60" />
                     </div>
                     <div className="relative flex justify-center text-xs font-bold text-muted-foreground">
                       <span className="bg-background px-4">
-                        atau ID Pelajar / Admin
+                        Masuk
                       </span>
                     </div>
                   </div>
@@ -333,6 +296,7 @@ const LoginSection: React.FC<LoginSectionProps> = ({ state, service }) => {
             </h1>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

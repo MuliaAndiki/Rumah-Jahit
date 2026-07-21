@@ -1,5 +1,5 @@
 import { APP_SESSION_COOKIE_KEY, APP_SESSION_COOKIE_REFRESH } from "../configs/cookies.config";
-import { baseurl, api, joinUrl, version } from "../configs/repo.config";
+import { api, baseurl, joinUrl, version } from "../configs/repo.config";
 import { ApiError as ApiErrorClass, type ApiSuccessResponse } from "../types/api.types";
 import { Logger } from "../utils/log";
 import { loadPwaAuthSession } from "../utils/pwa-auth.storage";

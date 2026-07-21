@@ -1,16 +1,10 @@
 "use client";
-
 import * as React from "react";
-import { useRouter } from "next/navigation";
-import { useApi } from "@/hooks/useApi";
-import SettingsSection from "@/components/page/settings/SettingsSection";
 
-import { clearTokens } from "@/server/auth-cookies";
-import { clearPwaAuthSession } from "@/utils/pwa-auth.storage";
-import { APP_SESSION_COOKIE_KEY, APP_SESSION_COOKIE_REFRESH, APP_SESSION_COOKIE_ROLE } from "@/configs/cookies.config";
+import SettingsSection from "@/components/page/settings/SettingsSection";
+import { useApi } from "@/hooks/useApi";
 
 export default function SettingsContainer() {
-  const router = useRouter();
   const api = useApi({ enabledGetMe: true });
 
   const { data: meRes, isLoading } = api.auth.getMe;
@@ -69,21 +63,7 @@ export default function SettingsContainer() {
     );
   };
 
-  const handleLogout = async () => {
-    try {
-      await clearTokens();
-    } catch (e) {
-      console.error(e);
-    }
-    clearPwaAuthSession();
-    localStorage.removeItem("token");
-    if (typeof document !== "undefined") {
-      document.cookie = `${APP_SESSION_COOKIE_KEY}=; path=/; max-age=0`;
-      document.cookie = `${APP_SESSION_COOKIE_REFRESH}=; path=/; max-age=0`;
-      document.cookie = `${APP_SESSION_COOKIE_ROLE}=; path=/; max-age=0`;
-    }
-    router.push("/login");
-  };
+
 
   return (
     <SettingsSection
@@ -106,7 +86,7 @@ export default function SettingsContainer() {
       service={{
         onUpdateProfile: handleUpdateProfile,
         onUpdatePassword: handleUpdatePassword,
-        onLogout: handleLogout,
+    
       }}
     />
   );

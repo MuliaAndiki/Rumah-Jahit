@@ -1,7 +1,7 @@
 import { CATALOG_ENDPOINTS } from "../endpoints/catalog.endpoints";
-import { ClientGetResponse, ClientPostResponse, ClientPutResponse, ClientDelResponse } from "./http";
-import { toServiceResponse, StandardResponse } from "./service-response";
+import { ClientDelResponse,ClientGetResponse, ClientPostResponse, ClientPutResponse, ClientPublicGetResponse } from "./http";
 import type { CatalogItemData, CatalogItemPayload } from "./props.service";
+import { StandardResponse,toServiceResponse } from "./service-response";
 
 class CatalogService {
   public async GetCatalogItems(params?: {
@@ -22,7 +22,7 @@ class CatalogService {
       if (params.isFeatured !== undefined) queryParts.push(`isFeatured=${params.isFeatured}`);
     }
     const queryStr = queryParts.length > 0 ? `?${queryParts.join("&")}` : "";
-    const res = await ClientGetResponse<CatalogItemData[]>(`${CATALOG_ENDPOINTS.LIST}${queryStr}`);
+    const res = await ClientPublicGetResponse<CatalogItemData[]>(`${CATALOG_ENDPOINTS.LIST}${queryStr}`);
     return toServiceResponse(res, {
       message: "Daftar katalog berhasil diambil",
       statusCode: 200,
@@ -30,7 +30,7 @@ class CatalogService {
   }
 
   public async GetCatalogItemById(id: string): Promise<StandardResponse<CatalogItemData>> {
-    const res = await ClientGetResponse<CatalogItemData>(CATALOG_ENDPOINTS.DETAIL(id));
+    const res = await ClientPublicGetResponse<CatalogItemData>(CATALOG_ENDPOINTS.DETAIL(id));
     return toServiceResponse(res, {
       message: "Detail katalog berhasil diambil",
       statusCode: 200,

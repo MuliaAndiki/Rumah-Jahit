@@ -40,7 +40,7 @@ class App {
     this.app.get("/", (req: Request, res: Response) => {
       res.json({
         success: true,
-        message: "Rumah Jahit Bespoke Tailoring Admin API is running!",
+        message: "Rumah Jahit Tailoring Admin API is running!",
         timestamp: new Date().toISOString(),
       });
     });

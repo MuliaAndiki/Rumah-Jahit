@@ -1,6 +1,7 @@
-import * as React from 'react';
-import Link from 'next/link';
 import { Icon } from '@iconify/react';
+import Link from 'next/link';
+import * as React from 'react';
+
 import { Button } from '@/components/atoms';
 import { AdminNavigationTabs } from '@/components/molecules/AdminNavigationTabs';
 import type { CatalogItemData, CategoryItem } from '@/services/props.service';
@@ -112,7 +113,7 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ state, service }) =
           <div className="p-6 rounded-2xl bg-linear-to-br from-blue-500/10 via-background to-background border border-border/80 shadow-xs flex flex-col justify-between space-y-4">
             <div>
               <span className="px-3 py-1 rounded-full bg-blue-500/20 text-blue-600 text-xs font-bold uppercase tracking-wider">
-                Katalog Bespoke
+                Katalog Koleksi
               </span>
               <h3 className="text-lg font-bold mt-2">Kelola Katalog & Galeri</h3>
               <p className="text-sm text-muted-foreground mt-1">
